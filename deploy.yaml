@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: starter-java
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: starter-java
+  template:
+    metadata:
+      labels:
+        name: starter-java
+        app: starter-java
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 20000
+      volumes:
+      - name: data
+        emptyDir: {}
+      - name: tmp-dir
+        emptyDir: {}
+      containers:
+       - name: starter-java
+         image: spring-starter:1.0
+         imagePullPolicy: IfNotPresent
+         env:
+         - name: APP_DATA_PATH
+           value: "/opt/data"
+         - name: CONTROLLER_NAME
+           valueFrom:
+             fieldRef:
+               fieldPath: metadata.name
+         - name: JOBS_NAMESPACE
+           valueFrom:
+             fieldRef:
+               fieldPath: metadata.namespace
+         ports:
+         - name: http
+           containerPort: 8080
+           protocol: TCP
+         resources:
+           requests:
+             cpu: 100m
+             memory: 256Mi
+           limits:
+             cpu: 250m
+             memory: 512Mi
+         securityContext:
+           runAsUser: 1000
+           runAsNonRoot: true
+           runAsGroup: 20000
+           privileged: false
+           readOnlyRootFilesystem: true
+           allowPrivilegeEscalation: false
+           capabilities:
+             drop:
+               - all
+         volumeMounts:
+         - name: data
+           mountPath: /opt/data
+         - name: tmp-dir
+           mountPath: /tmp
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: starter-java
+  labels:
+    app: starter-java
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 8080
+    targetPort: http
+    protocol: TCP
+  selector:
+    app: starter-java
+

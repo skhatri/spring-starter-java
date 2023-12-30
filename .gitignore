@@ -19,5 +19,20 @@
 *.tar.gz
 *.rar
 
+# postgres
+postgres/data/pgdata
+
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+
+# gradle
+.gradle
+build
+
+#intellij
+.idea
+*.iml
+*.iws
+*.ipr
+out
+
