@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component
 
 @Configuration
 @Component
-class JdbcConfig {
+open class JdbcConfig {
 
     @Autowired
     @Bean

@@ -6,9 +6,10 @@ import org.springframework.r2dbc.core.DatabaseClient
 import org.springframework.r2dbc.core.flow
 import org.springframework.stereotype.Repository
 import com.github.pokemon.model.Pokemon
+import org.springframework.beans.factory.annotation.Autowired
 
 @Repository
-class EntriesRepository(private val client: DatabaseClient) {
+open class EntriesRepository(@Autowired private val client: DatabaseClient) {
 
     fun listEntries(): Flow<Pokemon> {
         return client.sql("select * from pokedex.entries")

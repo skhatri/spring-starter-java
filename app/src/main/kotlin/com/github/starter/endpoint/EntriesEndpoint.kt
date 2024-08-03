@@ -13,7 +13,7 @@ import java.util.Date
 
 @RestController
 @RequestMapping("pokemon")
-class EntriesEndpoint(private val entriesRepository: EntriesRepository) {
+open class EntriesEndpoint(private val entriesRepository: EntriesRepository) {
 
     @GetMapping("/list")
     fun listEntries(): Flow<Pokemon> = entriesRepository.listEntries()

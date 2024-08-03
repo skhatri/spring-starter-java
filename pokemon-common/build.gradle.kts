@@ -2,7 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     id("jacoco")
-    kotlin("plugin.spring") version "1.8.10"
+    kotlin("plugin.spring") version "2.0.0"
 }
 
 java {
