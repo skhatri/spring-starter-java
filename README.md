@@ -17,12 +17,23 @@ Starter can be run with runApp task
 ```shell
 
 ./gradlew app:runApp 
-
+  
 
 ```
 
 #### Test Endpoint
 Launch the endpoint ```http://localhost:8080/pokemon/list``` to view the list of pokemons
+
+
+#### Test API
+Run Karate Test to test status page and pokemon data
+
+``` 
+./gradlew test
+```
+
+result can be viewed at ```app/build/repors/tests/test/index.html```
+
 
 #### Build
 
