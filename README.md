@@ -40,6 +40,9 @@ open app/build/reports/tests/test/index.html
 
 #### Testing GraphQL
 
+You can test it using embedded graphiql client ```http://localhost:8080/graphiql?path=/graphql```
+or invoke through curl
+
 Check Status
 
 ``` 
