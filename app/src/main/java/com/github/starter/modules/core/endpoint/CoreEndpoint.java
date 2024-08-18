@@ -1,11 +1,7 @@
-package com.github.starter.endpoint;
+package com.github.starter.modules.core.endpoint;
 
-import com.github.pokemon.model.Pokemon;
-import com.github.starter.repository.EntriesRepository;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import reactor.core.publisher.Flux;
 
 import java.io.File;
 import java.io.IOException;
@@ -16,19 +12,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("pokemon")
-public class EntriesEndpoint {
+public class CoreEndpoint {
 
-    private final EntriesRepository entriesRepository;
-
-    public EntriesEndpoint(EntriesRepository entriesRepository) {
-        this.entriesRepository = entriesRepository;
-    }
-
-    @GetMapping("/list")
-    public Flux<Pokemon> listEntries() {
-        return entriesRepository.listEntries();
-    }
 
     @GetMapping("/health")
     public Map<String, String> health() {

@@ -1,4 +1,4 @@
-package com.github.starter.repository;
+package com.github.starter.modules.pokemon.repository;
 
 import com.github.pokemon.model.Pokemon;
 import io.r2dbc.spi.Readable;
