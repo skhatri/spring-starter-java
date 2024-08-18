@@ -30,7 +30,8 @@ dependencies {
         "spring-boot-starter-webflux",
         "spring-boot-starter-reactor-netty",
         "spring-boot-starter",
-        "spring-boot-starter-graphql"
+        "spring-boot-starter-websocket",
+        "spring-boot-starter-graphql",
     ).forEach { name ->
         implementation("org.springframework.boot:${name}") {
             exclude(module = "spring-boot-starter-logging")

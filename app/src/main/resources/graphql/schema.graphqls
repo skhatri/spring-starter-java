@@ -22,6 +22,7 @@ type Status implements ServerStat {
     server_time: String!
 }
 
+
 # Type representing the server status with additional reason information.
 # This type implements the ServerStat interface and includes an additional field for reason.
 type StatusReason implements ServerStat {
@@ -94,4 +95,24 @@ type Query {
     # This field returns a non-nullable list of Pokémon types.
     # Each Pokémon in the list is non-nullable.
     getPokemonList: [Pokemon!]
+}
+
+# Type representing the server status with specific implementation details.
+# This type implements the ServerStat interface.
+type StatusStream implements ServerStat {
+    # The stream status id
+    id: String!
+    # The current status of the server.
+    # This field is required and must be a non-nullable String.
+    status: String!
+
+    # The timestamp of when the server status was recorded.
+    # This field is required and must be a non-nullable String in ISO 8601 format.
+    server_time: String!
+}
+
+
+
+type Subscription {
+    streamHealth: StatusStream!
 }
