@@ -14,3 +14,7 @@ endpoints:
 
 server.error.whitelabel.enabled: false
 
+spring:
+  graphql:
+    graphiql:
+      enabled: true

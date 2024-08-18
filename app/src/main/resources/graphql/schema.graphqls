@@ -1,0 +1,97 @@
+
+# Interface representing the basic server status information
+interface ServerStat {
+    # The current status of the server.
+    # This field is required and must be a non-nullable String.
+    status: String!
+
+    # The timestamp of the server status in ISO 8601 format.
+    # This field is required and must be a non-nullable String.
+    server_time: String!
+}
+
+# Type representing the server status with specific implementation details.
+# This type implements the ServerStat interface.
+type Status implements ServerStat {
+    # The current status of the server.
+    # This field is required and must be a non-nullable String.
+    status: String!
+
+    # The timestamp of when the server status was recorded.
+    # This field is required and must be a non-nullable String in ISO 8601 format.
+    server_time: String!
+}
+
+# Type representing the server status with additional reason information.
+# This type implements the ServerStat interface and includes an additional field for reason.
+type StatusReason implements ServerStat {
+    # The current status of the server.
+    # This field is required and must be a non-nullable String.
+    status: String!
+
+    # The timestamp of when the server status was recorded.
+    # This field is required and must be a non-nullable String in ISO 8601 format.
+    server_time: String!
+
+    # The reason for the current status of the server.
+    # This field is required and must be a non-nullable String.
+    reason: String!
+}
+
+
+# Type representing a Pokémon with various attributes.
+type Pokemon {
+    # The name of the Pokémon.
+    # This field is required and must be a non-nullable String.
+    name: String!
+
+    # The base stat value of the Pokémon. Legendary pokemons usually have higher base stat.
+    # This field is required and must be a non-nullable Int.
+    baseStat: Int!
+
+    # The primary type of the Pokémon, e.g., 'electric', 'fire', etc.
+    # This field is required and must be a non-nullable String.
+    primaryType: String!
+
+    # The secondary type of the Pokémon, if any. Some pokemons have two types.
+    # This field is optional and can be a nullable String.
+    secondaryType: String
+
+    # The location where the Pokémon is found.
+    # This field is required and must be a non-nullable String.
+    location: String!
+
+    # Indicates whether the Pokémon is legendary or not.
+    # This field is optional and can be a nullable Boolean.
+    legendary: Boolean
+
+    # The list of weaknesses of the Pokémon, e.g., ['ground', 'water'].
+    # This field is required and must be a non-nullable list of non-nullable Strings.
+    weakness: [String!]!
+
+    # The height of the Pokémon in meters.
+    # This field is required and must be a non-nullable Float.
+    height: Float!
+
+    # The weight of the Pokémon in kilograms.
+    # This field is required and must be a non-nullable Float.
+    weight: Float!
+}
+
+# The root Query type for fetching server status and Pokémon data.
+type Query {
+    # Fetches the basic status of the server.
+    # This field returns a Status type which implements ServerStat.
+    # The Status type includes fields for status and server time.
+    health: Status!
+
+    # Fetches detailed server status including a reason for the status.
+    # This field returns a StatusReason type which implements ServerStat.
+    # The StatusReason type includes additional fields for reason in addition to status and server time.
+    detailedHealthCheck: StatusReason!
+
+    # Retrieves a list of Pokémon.
+    # This field returns a non-nullable list of Pokémon types.
+    # Each Pokémon in the list is non-nullable.
+    getPokemonList: [Pokemon!]
+}

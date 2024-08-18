@@ -1,5 +1,7 @@
 package com.github.starter.modules.core.endpoint;
 
+import org.springframework.graphql.data.method.annotation.QueryMapping;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -10,11 +12,12 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 @RestController
 public class CoreEndpoint {
 
-
+    @QueryMapping
     @GetMapping("/health")
     public Map<String, String> health() {
         Map<String, String> response = new HashMap<>();
@@ -23,6 +26,7 @@ public class CoreEndpoint {
         return response;
     }
 
+    @QueryMapping
     @GetMapping("/check")
     public Map<String, String> detailedHealthCheck() {
         Map<String, String> response = new HashMap<>();
@@ -31,7 +35,7 @@ public class CoreEndpoint {
         String reason = "";
 
         try {
-            String appData = System.getenv("APP_DATA_PATH");
+            String appData = Objects.requireNonNullElse(System.getenv("APP_DATA_PATH"), ".");
             File file = new File(appData + "/test.txt");
             if (!file.exists()) {
                 file.createNewFile();

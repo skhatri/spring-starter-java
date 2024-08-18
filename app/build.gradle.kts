@@ -1,4 +1,3 @@
-
 plugins {
     id("org.sonarqube") version "3.5.0.2730"
     id("jacoco")
@@ -30,7 +29,8 @@ dependencies {
     listOf(
         "spring-boot-starter-webflux",
         "spring-boot-starter-reactor-netty",
-        "spring-boot-starter"
+        "spring-boot-starter",
+        "spring-boot-starter-graphql"
     ).forEach { name ->
         implementation("org.springframework.boot:${name}") {
             exclude(module = "spring-boot-starter-logging")
@@ -43,6 +43,8 @@ dependencies {
     implementation("io.r2dbc:r2dbc-postgresql:0.8.13.RELEASE")
     implementation("org.springframework.data:spring-data-r2dbc:3.3.2")
     implementation(project(":pokemon-common"))
+
+    testImplementation("org.springframework.graphql:spring-graphql-test")
 
     testImplementation("com.intuit.karate:karate-junit5:1.4.1")
 

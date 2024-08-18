@@ -38,6 +38,31 @@ result can be viewed at
 open app/build/reports/tests/test/index.html
 ```
 
+#### Testing GraphQL
+
+Check Status
+
+``` 
+curl 'http://localhost:8080/graphql' \
+  -H 'content-type: application/json' \
+  --data-raw '{
+        "query":"query HealthCheck {\n  health{\n    status\n    server_time\n  }\n}",
+        "operationName":"HealthCheck"
+    }'
+```
+
+Get Pokemon List
+
+``` 
+curl 'http://localhost:8080/graphql' \
+-H 'content-type: application/json' \
+--data-raw '{
+  "query": "query PokemonList {\n getPokemonList{\n name\n primaryType\n baseStat\n secondaryType\n location\n legendary\n weakness\n height\n weight\n }\n}\n",
+  "operationName": "PokemonList"
+}'
+```
+
+
 
 #### Build
 
