@@ -16,7 +16,7 @@ class KarateTests {
 
     @Karate.Test
     Karate pokemonTest() {
-        return Karate.run("classpath:karate/pokemon.feature");
+        return Karate.run("classpath:karate/pokemon/pokemon.feature");
     }
 }
 
