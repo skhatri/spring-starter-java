@@ -8,17 +8,27 @@ Feature: Pokemon Listing
 
     * method GET
     * status 200
-    * match $[0].name == "pikachu"
+    * def firstPokemon = $[0]
+    * match firstPokemon.name == "pikachu"
+    * match firstPokemon.baseStat == 320
+
+
 
   Scenario: Arceus primary type is normal
-
     * method GET
     * status 200
+    # karate.filter is a function. first argument is body and second is criteria to filter
     * def arceus = karate.filter(response, function(x){ return x.name == 'arceus' })
     * assert arceus.length == 1
     * match arceus[0].primaryType == 'normal'
 
-Scenario: Koraidon secondary type is dragon and has bunch of weaknesses
+  Scenario: The only dark pokemon name is chien-pao
+    * method GET
+    * status 200
+    * def dark_pokemon = karate.filter(response, function(x) { return x.primaryType == 'dark'})
+    * assert dark_pokemon.length > 0
+
+  Scenario: Koraidon secondary type is dragon and has bunch of weaknesses
 
     * method GET
     * status 200

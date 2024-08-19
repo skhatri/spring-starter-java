@@ -32,7 +32,10 @@ Run Karate Test to test status page and pokemon data
 ./gradlew test
 ```
 
-result can be viewed at ```app/build/repors/tests/test/index.html```
+result can be viewed at 
+```shell 
+open app/build/reports/tests/test/index.html
+```
 
 
 #### Build
