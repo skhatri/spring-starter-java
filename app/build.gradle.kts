@@ -41,7 +41,7 @@ dependencies {
     implementation("org.yaml:snakeyaml:2.2")
 
     implementation("org.springframework.boot:spring-boot-starter-log4j2")
-    implementation("io.r2dbc:r2dbc-postgresql:0.8.13.RELEASE")
+    implementation("org.postgresql:r2dbc-postgresql:1.0.5.RELEASE")
     implementation("org.springframework.data:spring-data-r2dbc:3.3.2")
     implementation(project(":pokemon-common"))
 

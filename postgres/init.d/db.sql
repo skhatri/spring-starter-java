@@ -59,3 +59,40 @@ values('koraidon', 'fighting', 'dragon', 670, '43.130077,-80.758316', true, '{"f
 insert into pokedex.entries(name, primary_type, base_stat, location, weakness, height, weight)
 values('arcanine', 'fire', 555, '-6.129323,28.986500', '{"ground", "rock", "water"}', 1.9, 155.0);
 
+
+CREATE TABLE pokedex.epl_standings (
+                               season INT NOT NULL,
+                               ranking INT NOT NULL,
+                               team VARCHAR(255) NOT NULL,
+                               played INT NOT NULL,
+                               gf INT NOT NULL,
+                               ga INT NOT NULL,
+                               gd INT NOT NULL,
+                               points INT NOT NULL,
+                               PRIMARY KEY (season, team)
+);
+
+CREATE TABLE pokedex.epl_team_match (
+    season INT NOT NULL,
+    wk INT NOT NULL,
+    matchDate DATE NOT NULL,
+    team VARCHAR(255) NOT NULL,
+    opponent VARCHAR(255) NOT NULL,
+    venue VARCHAR(255),
+    result VARCHAR(10),
+    gf INT NOT NULL,
+    ga INT NOT NULL,
+    points INT NOT NULL,
+    PRIMARY KEY (season, wk, matchDate, team, opponent)
+);
+
+set role postgres;
+COPY pokedex.epl_standings (season, ranking, team, played, gf, ga, gd, points)
+    FROM '/tmp/csv/epl-table-1992-2024.csv'
+    WITH (FORMAT csv, HEADER false, DELIMITER ',');
+
+copy pokedex.epl_team_match (season, wk, matchDate, team, opponent, venue, result, gf, ga, points)
+    FROM '/tmp/csv/epl-historical-1992-2024.csv'
+    WITH (FORMAT csv, HEADER false, DELIMITER ',');
+
+set role pokemon_owner;

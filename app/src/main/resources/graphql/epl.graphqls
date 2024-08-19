@@ -1,0 +1,129 @@
+extend type Query {
+    """
+    Retrieves a list of matches with the biggest margin of victory.
+    The margin is calculated as the difference between goals scored and goals conceded.
+    """
+    biggestMargin(season:Int! = -1): [EplMatch!]
+    """
+    Retrieves a list of matches with the most goals scored by a team.
+    """
+    mostGoals(season:Int! = -1): [EplMatch!]
+    """
+    Return team's standing for a given season or all seasons when season is not provided.
+    """
+    seasonPerformance(team: String!, season: Int! = -1):[EplStanding!]
+    """
+    Season points table with ranking
+    """
+    seasonTable(season: Int):[EplStanding!]
+    """
+    Premier League Winner for the season
+    """
+    winner(season: Int! = -1):[EplStanding!]
+    """
+    All participating teams in Premier League.
+    If season is not provided, it will return all histprical premier league teams.
+    """
+    allTeams(season: Int! = -1):[String!]
+}
+
+
+"""
+Represents a football match in the English Premier League.
+"""
+type EplMatch {
+    """
+    The season of the match, typically represented as a year (e.g., 2024).
+    """
+    season: Int!
+
+    """
+    The week number of the match within the season.
+    """
+    wk: Int!
+
+    """
+    The team that played in the match.
+    """
+    team: String!
+
+    """
+    The opponent team in the match.
+    """
+    opponent: String!
+
+    """
+    The date when the match was played, formatted as an ISO 8601 date string (e.g., "2024-08-10").
+    """
+    matchDate: String!
+
+    """
+    Goals conceded by the team in the match.
+    """
+    ga: Int!
+
+    """
+    Goals scored by the team in the match.
+    """
+    gf: Int!
+
+    """
+    Points earned by the team in the match. Typically, 3 points for a win, 1 for a draw, and 0 for a loss.
+    """
+    points: Int!
+
+    """
+    The venue where the match was played, such as "Home" or "Away".
+    """
+    venue: String!
+
+    """
+    The result of the match, typically represented as "W" for Win, "D" for Draw, and "L" for Loss.
+    """
+    result: String!
+}
+
+"""
+Represents the standings of a football team in the English Premier League for a specific season.
+"""
+type EplStanding {
+    """
+    The season of the standings, typically represented as a year (e.g., 2024).
+    """
+    season: Int!
+
+    """
+    The ranking of the team within the season.
+    """
+    ranking: Int!
+
+    """
+    The name of the team.
+    """
+    team: String!
+
+    """
+    The number of matches played by the team in the season.
+    """
+    played: Int!
+
+    """
+    Goals scored by the team in the season.
+    """
+    gf: Int!
+
+    """
+    Goals conceded by the team in the season.
+    """
+    ga: Int!
+
+    """
+    Goal difference for the team, calculated as goals scored minus goals conceded.
+    """
+    gd: Int!
+
+    """
+    Total points accumulated by the team in the season. Typically, 3 points for a win, 1 for a draw, and 0 for a loss.
+    """
+    points: Int!
+}
