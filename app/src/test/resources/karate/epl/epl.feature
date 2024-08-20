@@ -63,6 +63,16 @@ Feature: EPL Listing
       * match teamWon[0].points == 83
       * match teamWon[0].ranking ==1
 
+  Scenario: List All Premier League winner between 2012-2017 & 2011 Manchester Utd has won the Premier League
+      * path '/epl/winners'
+      * method GET
+      * status 200
+      * def champions = karate.filter(response, function(x){return x.season >= 2012 && x.season <= 2017})
+      * def team_won_2011 = karate.filter(response, function(x){return x.season == '2011'})
+      * match team_won_2011[0].team == 'Manchester Utd'
+      * match team_won_2011[0].ranking == 1
+      * print response
+
 
 
 
