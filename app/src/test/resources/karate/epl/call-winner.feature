@@ -8,6 +8,7 @@ Feature: call winner api
     """
     query FindWinner($season:Int!) {
       winner(season:$season){
+        season
         team
         points
         gf
