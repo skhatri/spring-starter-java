@@ -15,34 +15,46 @@ Feature: EPL Listing
     * path '/epl/most-goals'
     * method GET
     * status 200
-    * print response
+
 
   Scenario: List EPL season performance
     * path '/epl/season-performance'
     * param team = 'Manchester Utd'
     * method GET
     * status 200
-    * print response
+
 
   Scenario: List EPL season table
       * path '/epl/season-table'
       * param season = '2021'
       * method GET
       * status 200
-     * print response
+
 
   Scenario: List EPL winners
       * path '/epl/winners'
       * method GET
       * status 200
-      * print response
+
 
   Scenario: EPL biggest margin, season 2020
       * path '/epl/biggest-margin'
       * param season = '2021'
       * method GET
       * status 200
-      * print response
+
+
+  Scenario:  Season 2018 Manchester City has scored 106 goal and conceded 27 playing 38 games and won Premier League
+      * path '/epl/winners'
+      * method GET
+      * status 200
+      * def result = karate.filter(response, function(x){return x.season == '2018'})
+      * match result[0].team == 'Manchester City'
+      * match result[0].gf == 106
+      * match result[0].ga == 27
+      * match result[0].played == 38
+      * match result[0].ranking == 1
+
 
     #List of Endpoints => GET Request => Header => content-type = application/json
 #  1. http://localhost:8080/epl/biggest-margin
