@@ -2,7 +2,7 @@ package com.github.starter;
 
 import com.intuit.karate.junit5.Karate;
 
-class KarateTests {
+public class KarateTests {
 
     @Karate.Test
     Karate dummyTest() {
@@ -15,8 +15,6 @@ class KarateTests {
     }
 
     @Karate.Test
-    Karate pokemonTest() {
-        return Karate.run("classpath:karate/pokemon/pokemon.feature");
-    }
+    Karate pokemonTest() {return Karate.run("classpath:karate/pokemon/pokemon.feature");}
 }
 
