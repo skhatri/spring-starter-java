@@ -55,7 +55,13 @@ Feature: EPL Listing
       * match result[0].played == 38
       * match result[0].ranking == 1
 
-
+  Scenario: Manchester United had won Premier League in 2003 and had a total points of 83
+      * path '/epl/winners'
+      * method GET
+      * status 200
+      * def teamWon = karate.filter(response, function(x){return x.team == 'Manchester Utd' && x.season == '2003'})
+      * match teamWon[0].points == 83
+      * match teamWon[0].ranking ==1
     #List of Endpoints => GET Request => Header => content-type = application/json
 #  1. http://localhost:8080/epl/biggest-margin
 #  2. http://localhost:8080/epl/most-goals
