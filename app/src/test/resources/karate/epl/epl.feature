@@ -75,13 +75,18 @@ Feature: EPL Listing
 
   Scenario: List team scoring more than 100 goals then find high scoring team of 2010 confirming it's Chelsea
       * path '/epl/winners'
-      * method Get
+      * method GET
       * status 200
       * def high_scoring_team = karate.filter(response, function(x){return x.gf > 100})
       * def hst_2010 = karate.filter(response, function(x){return x.season == '2010'})
       * match hst_2010[0].team == 'Chelsea'
-      * print hst_2010
+      * match hst_2010[0].team == '#string'
+      * match hst_2010[0].gf == 103
+      * match hst_2010[0].gd == 71
+      * match hst_2010[0].gd == '#number'
+      * assert hst_2010.length == 1
       * print high_scoring_team
+      * print hst_2010
 
 
 
