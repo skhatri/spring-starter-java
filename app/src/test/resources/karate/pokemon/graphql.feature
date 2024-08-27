@@ -19,6 +19,10 @@ Feature: Pokemon Graphql Listing
       """
     And request { query: '#(query)' }
     When method POST
+    And request { query: '#(query)' }
+    When method POST
     Then status 200
     * def pokeList = $.data.getPokemonList
     * match pokeList[0].name == "pikachu"
+    * print pokeList
+

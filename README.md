@@ -1,4 +1,4 @@
-# microservices-starter
+.# microservices-starter
 
 spring starter project using pokemon example
 

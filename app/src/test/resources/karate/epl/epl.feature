@@ -22,6 +22,7 @@ Feature: EPL Listing
     * param team = 'Manchester Utd'
     * method GET
     * status 200
+    * print response
 
 
   Scenario: List EPL season table
