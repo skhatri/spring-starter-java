@@ -1,6 +1,7 @@
 package com.github.starter.modules.epl.model;
 
 public class EplStanding {
+
     private int season;
     private int ranking;
     private String team;

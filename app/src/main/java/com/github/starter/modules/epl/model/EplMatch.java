@@ -4,7 +4,7 @@ package com.github.starter.modules.epl.model;
 import java.util.Date;
 
 public class EplMatch {
-    //season | wk | matchdate  |      team      |   opponent   | venue | result | gf | ga | points
+
     private int season;
     private int wk;
     private Date matchDate;

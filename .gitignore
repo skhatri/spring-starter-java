@@ -44,3 +44,6 @@ out
 target
 test.txt
 
+#app
+*.db
+

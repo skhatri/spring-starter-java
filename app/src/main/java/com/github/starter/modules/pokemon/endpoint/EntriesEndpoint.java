@@ -2,6 +2,7 @@ package com.github.starter.modules.pokemon.endpoint;
 
 import com.github.pokemon.model.Pokemon;
 import com.github.starter.modules.pokemon.repository.EntriesRepository;
+import com.github.starter.modules.pokemon.repository.PgEntriesRepository;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

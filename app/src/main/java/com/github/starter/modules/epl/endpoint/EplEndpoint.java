@@ -1,13 +1,10 @@
 package com.github.starter.modules.epl.endpoint;
 
-import com.github.pokemon.model.Pokemon;
 import com.github.starter.modules.epl.model.EplMatch;
 import com.github.starter.modules.epl.model.EplStanding;
 import com.github.starter.modules.epl.repository.MatchRepository;
-import com.github.starter.modules.pokemon.repository.EntriesRepository;
 import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 

@@ -7,8 +7,8 @@ cmd=$1
 case $cmd in
 
 spring)
-  ./gradlew app:clean app:build
-  docker build --no-cache -t spring-starter app -f app/docker/Dockerfile.jvm
+  ./gradlew app:clean app:build -x app:test
+  docker build --no-cache -t spring-starter . -f app/docker/Dockerfile.jvm
   ;;
 
 *)

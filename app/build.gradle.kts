@@ -1,7 +1,7 @@
 plugins {
-    id("org.sonarqube") version "3.5.0.2730"
+    id("org.sonarqube") version "5.1.0.4882"
     id("jacoco")
-    id("org.springframework.boot") version "3.3.2"
+    id("org.springframework.boot") version "3.3.3"
     id("io.spring.dependency-management") version "1.1.6"
 }
 
@@ -42,10 +42,17 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-log4j2")
     implementation("org.postgresql:r2dbc-postgresql:1.0.5.RELEASE")
-    implementation("org.springframework.data:spring-data-r2dbc:3.3.2")
+    implementation("org.duckdb:duckdb_jdbc:1.0.0")
+    implementation("org.springframework.data:spring-data-r2dbc:3.3.3")
     implementation(project(":pokemon-common"))
 
     testImplementation("org.springframework.graphql:spring-graphql-test")
+    testImplementation("org.springframework.boot:spring-boot-test") {
+        exclude(module="spring-boot-starter-logging")
+    }
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(module="spring-boot-starter-logging")
+    }
 
     testImplementation("com.intuit.karate:karate-junit5:1.4.1")
 
@@ -63,8 +70,13 @@ task("runApp", JavaExec::class) {
     mainClass = "com.github.starter.Application"
     classpath = sourceSets["main"].runtimeClasspath
     jvmArgs = listOf("-Xms512m", "-Xmx512m")
+    environment("DATASET_DIR", "")
 }
 
 tasks.test {
     useJUnitPlatform()
+}
+
+configurations.all {
+    exclude(group="ch.qos.logback", module="logback-classic")
 }
