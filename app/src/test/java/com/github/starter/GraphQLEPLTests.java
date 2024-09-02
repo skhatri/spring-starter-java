@@ -1,7 +1,9 @@
 package com.github.starter;
 
 import com.intuit.karate.junit5.Karate;
+import org.springframework.boot.test.context.SpringBootTest;
 
+@SpringBootTest
 public class GraphQLEPLTests {
 
     @Karate.Test
