@@ -4,7 +4,7 @@ import com.github.starter.modules.epl.model.EplMatch;
 import com.github.starter.modules.epl.model.EplStanding;
 import io.r2dbc.spi.Readable;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.function.Function;
 
 public final class Mappers {
@@ -19,7 +19,7 @@ public final class Mappers {
             eplMatch.setSeason(kv.get("season", Integer.class));
             eplMatch.setTeam(kv.get("team", String.class));
             eplMatch.setWk(kv.get("wk", Integer.class));
-            eplMatch.setMatchDate(kv.get("matchDate", Date.class));
+            eplMatch.setMatchDate(kv.get("matchDate", LocalDate.class));
             eplMatch.setPoints(kv.get("points", Integer.class));
             eplMatch.setGf(kv.get("gf", Integer.class));
             eplMatch.setGa(kv.get("ga", Integer.class));

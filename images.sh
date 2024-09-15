@@ -2,19 +2,11 @@
 set -o pipefail
 set -e
 
-cmd=$1
-
-case $cmd in
-
-spring)
-  ./gradlew app:clean app:build -x app:test
-  docker build --no-cache -t spring-starter . -f app/docker/Dockerfile.jvm
-  ;;
-
-*)
-  echo not known
-  exit 1;
-;;
-
-esac
-
+./gradlew app:clean app:build
+docker build --no-cache -t app . -f app/docker/Dockerfile.jvm
+if [[ $? -eq 0 ]];
+then
+  echo " created container image app:latest. Run this image using:
+  docker run --rm -p 8080:8080 -d app
+  "
+fi;

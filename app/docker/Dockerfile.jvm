@@ -1,4 +1,3 @@
-#FROM cloudnativek8s/microservices-java21-alpine:v1.0.35
 FROM openjdk:21-jdk
 
 ARG UID="10000"
@@ -6,18 +5,19 @@ ENV LANGUAGE='en_US:en'
 
 EXPOSE 8080
 
-RUN mkdir -p /opt/app && ln -s /opt/app /libs && mkdir -p /opt/db-migrations && ln -s /opt/db-migrations /opt/db
+RUN mkdir -p /opt/work/app && ln -s /opt/work/app /libs && mkdir -p /opt/work/db-migrations && ln -s /opt/work/db-migrations /opt/work/db
 
-WORKDIR /opt/app
+WORKDIR /opt/work/app
 
 RUN groupadd -g ${UID} -r app && useradd -u ${UID} -g app -r app \
-    && chown -R app:app /opt/app /libs /opt/db-migrations /opt/db && chmod -R g+rwx /opt/app /opt/db
+    && chown -R app:app /opt/work /libs && chmod -R g+rwx /opt/work
 
 USER app
-COPY --chown=app:app app/build/libs/app.jar /opt/app/app.jar
-COPY --chown=app:app db /opt/db
+COPY --chown=app:app app/build/libs/app.jar /opt/work/app/app.jar
+COPY --chown=app:app db /opt/work/db
 
 ENV JAVA_OPTS=""
-CMD [ "java", "-jar", "/opt/app/app.jar" ]
+ENV DATASET_DIR="/opt/work/db"
+CMD [ "java", "-jar", "/opt/work/app/app.jar" ]
 
 

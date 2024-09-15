@@ -26,7 +26,7 @@ core:
   duckdb:
     url: "jdbc:duckdb:/tmp/starter.db"
     init:
-      file: "../db/duckdb/init.sql"
+      file: "${DATASET_DIR:./db}/duckdb.sql"
       enabled: true
 
   pg:

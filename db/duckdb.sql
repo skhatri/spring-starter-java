@@ -62,7 +62,8 @@ CREATE TABLE epl_team_match (
         PRIMARY KEY (season, wk, matchDate, team, opponent)
 );
 
-copy epl_standings(season,ranking,team,played,gf,ga,gd,points) from '../db/csv/epl-table-1992-2024.csv';
+copy epl_standings(season,ranking,team,played,gf,ga,gd,points) from "${DATASET_DIR}/csv/epl-table-1992-2024.csv";
 
-copy epl_team_match(season,wk,matchDate,team,opponent,venue,result,gf,ga,points) from '../db/csv/epl-historical-1992-2024.csv';
+copy epl_team_match(season,wk,matchDate,team,opponent,venue,result,gf,ga,points) from "${DATASET_DIR}/csv/epl-historical-1992-2024.csv";
+
 

@@ -23,7 +23,7 @@ Feature: Goals Scored in a Match
     Then status 200
     * table expected
       | team             | opponent      | gf | ga | matchDate                       |
-      | 'Manchester Utd' | 'Southampton' | 9  | 0  | 'Tue Feb 02 00:00:00 AEDT 2021' |
+      | 'Manchester Utd' | 'Southampton' | 9  | 0  | '2021-02-02' |
     And def topGoals = $.data.mostGoals
     And match topGoals == expected
 
@@ -46,9 +46,9 @@ Feature: Goals Scored in a Match
     Then status 200
     * table expected
       | team             | opponent    | gf | ga | matchDate                       |
-      | 'Manchester Utd' | 'Arsenal'   | 8  | 2  | 'Sun Aug 28 00:00:00 AEST 2011' |
-      | 'Fulham'         | 'QPR'       | 6  | 0  | 'Sat Oct 01 00:00:00 AEST 2011' |
-      | 'Arsenal'        | 'Blackburn' | 7  | 1  | 'Sat Feb 04 00:00:00 AEDT 2012' |
+      | 'Manchester Utd' | 'Arsenal'   | 8  | 2  | '2011-08-28' |
+      | 'Fulham'         | 'QPR'       | 6  | 0  | '2011-10-01' |
+      | 'Arsenal'        | 'Blackburn' | 7  | 1  | '2012-02-04' |
 
     And def biggestMargin = $.data.biggestMargin
     And match biggestMargin == expected

@@ -3,6 +3,7 @@ package com.github.starter.modules.epl.repository;
 import com.github.starter.modules.epl.model.EplMatch;
 import com.github.starter.modules.epl.model.EplStanding;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Map;
 import java.util.function.Function;
@@ -19,7 +20,7 @@ class DuckMappers {
             eplMatch.setSeason((int) kv.get("season"));
             eplMatch.setTeam((String) kv.get("team"));
             eplMatch.setWk((int) kv.get("wk"));
-            eplMatch.setMatchDate((Date) kv.get("matchDate"));
+            eplMatch.setMatchDate((LocalDate) kv.get("matchDate"));
             eplMatch.setPoints((int) kv.get("points"));
             eplMatch.setGf((int) kv.get("gf"));
             eplMatch.setGa((int) kv.get("ga"));

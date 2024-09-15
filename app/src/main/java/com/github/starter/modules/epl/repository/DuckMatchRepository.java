@@ -60,7 +60,7 @@ public class DuckMatchRepository implements MatchRepository {
 
         return client.sql("""
                         SELECT *
-                        FROM pokedex.epl_standings
+                        FROM epl_standings
                         where season = ?
                         order by ranking asc
                         """).bind(1, season).map(DuckMappers.eplStanding());

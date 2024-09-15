@@ -70,11 +70,12 @@ task("runApp", JavaExec::class) {
     mainClass = "com.github.starter.Application"
     classpath = sourceSets["main"].runtimeClasspath
     jvmArgs = listOf("-Xms512m", "-Xmx512m")
-    environment("DATASET_DIR", "")
+    environment("DATASET_DIR", "${projectDir}/../db")
 }
 
 tasks.test {
     useJUnitPlatform()
+    environment("DATASET_DIR", "${projectDir}/../db")
 }
 
 configurations.all {

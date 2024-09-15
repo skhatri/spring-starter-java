@@ -1,13 +1,14 @@
 package com.github.starter.modules.epl.model;
 
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class EplMatch {
 
     private int season;
     private int wk;
-    private Date matchDate;
+    private LocalDate matchDate;
     private String team;
     private String opponent;
     private String venue;
@@ -24,7 +25,7 @@ public class EplMatch {
         this.wk = wk;
     }
 
-    public void setMatchDate(Date matchDate) {
+    public void setMatchDate(LocalDate matchDate) {
         this.matchDate = matchDate;
     }
 
@@ -64,7 +65,7 @@ public class EplMatch {
         return wk;
     }
 
-    public Date getMatchDate() {
+    public LocalDate getMatchDate() {
         return matchDate;
     }
 

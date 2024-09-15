@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 import java.util.Properties;
 
 
@@ -30,7 +31,9 @@ public class DuckDbConfig {
                 String[] stmts = lines.split(";");
                 for (String stmt : stmts) {
                     if (!stmt.isBlank()) {
-                        client.sql(stmt).execute();
+                        client.sql(stmt.replaceAll("\\$\\{DATASET_DIR\\}",
+                                Optional.ofNullable(System.getenv("DATASET_DIR")).orElse("./db")
+                        )).execute();
                     }
                 }
             } catch (Exception ex) {

@@ -37,6 +37,8 @@ build
 *.ipr
 out
 
+.vscode
+
 # Mac
 .DS_Store
 
