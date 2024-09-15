@@ -87,8 +87,16 @@ EPL Queries
 Build image like so
 
 ```
-./images.sh spring
+./images.sh 
 ```
 
+Once the image is built, run it like this
+
+```shell
+#run with embedded duckdb
+docker run -p 8080:8080 --rm -it app
+#run with adjacent postgres
+docker run -p 8080:8080 -e APP_DB=pg -e POSTGRES_HOST=postgres --network spring-starter-java_starter --rm -it app
+```
 
 

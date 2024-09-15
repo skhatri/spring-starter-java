@@ -71,11 +71,13 @@ task("runApp", JavaExec::class) {
     classpath = sourceSets["main"].runtimeClasspath
     jvmArgs = listOf("-Xms512m", "-Xmx512m")
     environment("DATASET_DIR", "${projectDir}/../db")
+    environment("APP_DB", "duckdb")
 }
 
 tasks.test {
     useJUnitPlatform()
     environment("DATASET_DIR", "${projectDir}/../db")
+    environment("APP_DB", "duckdb")
 }
 
 configurations.all {

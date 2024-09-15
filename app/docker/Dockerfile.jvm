@@ -18,6 +18,9 @@ COPY --chown=app:app db /opt/work/db
 
 ENV JAVA_OPTS=""
 ENV DATASET_DIR="/opt/work/db"
+ENV APP_DB="duckdb"
+#setting it so it is easy to use postgres container when APP_DB is pg
+ENV POSTGRES_HOST="postgres"
 CMD [ "java", "-jar", "/opt/work/app/app.jar" ]
 
 

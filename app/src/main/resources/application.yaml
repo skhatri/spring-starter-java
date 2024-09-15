@@ -22,7 +22,7 @@ spring:
       path: /graphql
 
 core:
-  db: duckdb
+  db: ${APP_DB:duckdb}
   duckdb:
     url: "jdbc:duckdb:/tmp/starter.db"
     init:
@@ -30,8 +30,8 @@ core:
       enabled: true
 
   pg:
-    host: localhost
-    port: 5432
-    username: starter_user
-    password: postgres
-    database: starter
+    host: ${POSTGRES_HOST:localhost}
+    port: ${POSTGRES_PORT:5432}
+    username: ${POSTGRES_USER:starter_user}
+    password: ${POSTGRES_PASSWORD:starter}
+    database: ${POSTGRES_DB:starter}
