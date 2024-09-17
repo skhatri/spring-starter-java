@@ -1,0 +1,13 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/health"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "status": "UP",
+      "server_time": "2024-08-29T00:10:00+08:00"
+    }
+  }
+}

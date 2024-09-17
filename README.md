@@ -34,7 +34,7 @@ Launch the endpoint ```http://localhost:8080/pokemon/list``` to view the list of
 
 Run Karate Test to test status page and pokemon data
 
-``` 
+```
 ./gradlew test
 ```
 
@@ -42,6 +42,13 @@ result can be viewed at
 
 ```shell 
 open app/build/reports/tests/test/index.html
+```
+There are spring boot integration tests as well as wiremock tests using testcontainers.
+You can disable either of them by providing something like
+
+```shell
+ export NO_WIREMOCK=true
+ export NO_BOOT=true
 ```
 
 #### Testing GraphQL

@@ -1,0 +1,165 @@
+{
+  "request": {
+    "method": "GET",
+    "url": "/pokemon/list"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": [
+      {
+        "name": "pikachu",
+        "baseStat": 320,
+        "primaryType": "electric",
+        "secondaryType": null,
+        "location": "25.749537,-80.258957",
+        "legendary": null,
+        "weakness": [
+          "ground"
+        ],
+        "height": 0.40,
+        "weight": 6.00
+      },
+      {
+        "name": "arceus",
+        "baseStat": 720,
+        "primaryType": "normal",
+        "secondaryType": null,
+        "location": "25.749537,-80.258957",
+        "legendary": true,
+        "weakness": [
+          "fighting"
+        ],
+        "height": 3.20,
+        "weight": 320.00
+      },
+      {
+        "name": "articuno",
+        "baseStat": 550,
+        "primaryType": "ice",
+        "secondaryType": "flying",
+        "location": "-34.915440,138.595520",
+        "legendary": true,
+        "weakness": [
+          "electric",
+          "rock",
+          "fire",
+          "steel"
+        ],
+        "height": 1.70,
+        "weight": 55.40
+      },
+      {
+        "name": "charmeleon",
+        "baseStat": 405,
+        "primaryType": "fire",
+        "secondaryType": null,
+        "location": "30.494345,-90.916779",
+        "legendary": null,
+        "weakness": [
+          "rock",
+          "water",
+          "ground"
+        ],
+        "height": 1.10,
+        "weight": 19.00
+      },
+      {
+        "name": "dragonite",
+        "baseStat": 600,
+        "primaryType": "dragon",
+        "secondaryType": "flying",
+        "location": "33.799973,-117.934158",
+        "legendary": null,
+        "weakness": [
+          "rock",
+          "fairy",
+          "ice",
+          "dragon"
+        ],
+        "height": 2.20,
+        "weight": 210.00
+      },
+      {
+        "name": "baxcalibur",
+        "baseStat": 600,
+        "primaryType": "dragon",
+        "secondaryType": "ice",
+        "location": "38.937969,-77.282272",
+        "legendary": null,
+        "weakness": [
+          "fairy",
+          "steel",
+          "dragon",
+          "fighting",
+          "rock"
+        ],
+        "height": 2.10,
+        "weight": 210.00
+      },
+      {
+        "name": "chien-pao",
+        "baseStat": 570,
+        "primaryType": "dark",
+        "secondaryType": "ice",
+        "location": "35.658455,139.745026",
+        "legendary": true,
+        "weakness": [
+          "fire",
+          "fighting",
+          "bug",
+          "rock",
+          "steel",
+          "fairy"
+        ],
+        "height": 1.90,
+        "weight": 152.20
+      },
+      {
+        "name": "koraidon",
+        "baseStat": 670,
+        "primaryType": "fighting",
+        "secondaryType": "dragon",
+        "location": "43.130077,-80.758316",
+        "legendary": true,
+        "weakness": [
+          "fairy",
+          "ice",
+          "dragon",
+          "psychic",
+          "flying"
+        ],
+        "height": 2.50,
+        "weight": 303.00
+      },
+      {
+        "name": "arcanine",
+        "baseStat": 555,
+        "primaryType": "fire",
+        "secondaryType": null,
+        "location": "-6.129323,28.986500",
+        "legendary": null,
+        "weakness": [
+          "ground",
+          "rock",
+          "water"
+        ],
+        "height": 1.90,
+        "weight": 155.00
+      },
+      {
+        "name": "psyduck",
+        "baseStat": 320,
+        "primaryType": "water",
+        "secondaryType": null,
+        "location": "-6.129323,28.986500",
+        "legendary": null,
+        "weakness": [
+          "electric",
+          "grass"
+        ],
+        "height": 0.80,
+        "weight": 19.60
+      }
+    ]
+  }
+}

@@ -64,6 +64,9 @@ dependencies {
     testImplementation("org.junit.platform:junit-platform-runner:$junitPlatformVersion")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher:$junitPlatformVersion")
     testRuntimeOnly("org.junit.platform:junit-platform-engine:$junitPlatformVersion")
+    testImplementation("org.testcontainers:testcontainers:1.20.1")
+    testImplementation("org.testcontainers:junit-jupiter:1.20.1")
+    testImplementation("org.wiremock.integrations.testcontainers:wiremock-testcontainers-module:1.0-alpha-14")
 }
 
 task("runApp", JavaExec::class) {
@@ -78,6 +81,7 @@ tasks.test {
     useJUnitPlatform()
     environment("DATASET_DIR", "${projectDir}/../db")
     environment("APP_DB", "duckdb")
+    maxParallelForks = 1
 }
 
 configurations.all {
