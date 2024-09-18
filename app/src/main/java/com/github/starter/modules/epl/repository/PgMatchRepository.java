@@ -26,7 +26,7 @@ public class PgMatchRepository implements MatchRepository {
                         FROM app.epl_team_match 
                         where season %s AND points > 0 and abs(gf-ga)=(
                             select max(abs(gf-ga)) 
-                            from pokedex.epl_team_match
+                            from app.epl_team_match
                             where season %s
                         ) 
                         """, seasonSelector, seasonSelector)).map(Mappers.eplMatch())
@@ -40,7 +40,7 @@ public class PgMatchRepository implements MatchRepository {
                         FROM app.epl_team_match 
                         where season %s AND points > 0 and gf=(
                             select max(gf) 
-                            from pokedex.epl_team_match
+                            from app.epl_team_match
                             where season %s
                         ) 
                         """, seasonSelector, seasonSelector)).map(Mappers.eplMatch())
