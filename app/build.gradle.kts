@@ -81,6 +81,8 @@ tasks.test {
     useJUnitPlatform()
     environment("DATASET_DIR", "${projectDir}/../db")
     environment("APP_DB", "duckdb")
+    environment("NO_WIREMOCK", project.ext["no.wiremock"])
+    environment("NO_BOOT", project.ext["no.boot"])
     maxParallelForks = 1
 }
 
