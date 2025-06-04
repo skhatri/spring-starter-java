@@ -1,0 +1,212 @@
+{
+  "mappings": [
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/pokemon/list"
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "data": [
+            {
+              "pokedex": 1,
+              "name": "Bulbasaur",
+              "primaryType": "Grass",
+              "secondaryType": "Poison",
+              "total": 318,
+              "hp": 45,
+              "attack": 49,
+              "defence": 49,
+              "spAttack": 65,
+              "spDefence": 65,
+              "speed": 45,
+              "generation": 1,
+              "legendary": "False",
+              "region": "Kanto",
+              "effectiveness": null
+            },
+            {
+              "pokedex": 5,
+              "name": "Charmeleon",
+              "primaryType": "Fire",
+              "secondaryType": null,
+              "total": 405,
+              "hp": 58,
+              "attack": 64,
+              "defence": 58,
+              "spAttack": 80,
+              "spDefence": 65,
+              "speed": 80,
+              "generation": 1,
+              "legendary": "False",
+              "region": "kanto",
+              "effectiveness": null
+            },
+            {
+              "pokedex": 12,
+              "name": "Butterfree",
+              "primaryType": "Bug",
+              "secondaryType": "Flying",
+              "total": 395,
+              "hp": 60,
+              "attack": 45,
+              "defence": 50,
+              "spAttack": 90,
+              "spDefence": 80,
+              "speed": 70,
+              "generation": 1,
+              "legendary": "False",
+              "region": "kanto",
+              "effectiveness": null
+            },
+            {
+              "pokedex": 18,
+              "name": "Pidgeot",
+              "primaryType": "Normal",
+              "secondaryType": "Flying",
+              "total": 479,
+              "hp": 83,
+              "attack": 80,
+              "defence": 75,
+              "spAttack": 70,
+              "spDefence": 70,
+              "speed": 101,
+              "generation": 1,
+              "legendary": "False",
+              "region": "kanto",
+              "effectiveness": null
+            },
+            {
+              "pokedex": 493,
+              "name": "Arceus",
+              "primaryType": "Normal",
+              "secondaryType": null,
+              "total": 720,
+              "hp": 120,
+              "attack": 120,
+              "defence": 120,
+              "spAttack": 120,
+              "spDefence": 120,
+              "speed": 120,
+              "generation": 4,
+              "legendary": "True",
+              "region": "Sinnoh",
+              "effectiveness": null
+            },
+            {
+              "pokedex": 1002,
+              "name": "Chien-Pao",
+              "primaryType": "Dark",
+              "secondaryType": "Ice",
+              "total": 570,
+              "hp": 80,
+              "attack": 120,
+              "defence": 80,
+              "spAttack": 90,
+              "spDefence": 65,
+              "speed": 135,
+              "generation": 9,
+              "legendary": "True",
+              "region": "Paldea",
+              "effectiveness": null
+            },
+            {
+              "pokedex": 1007,
+              "name": "Koraidon",
+              "primaryType": "Fighting",
+              "secondaryType": "Dragon",
+              "total": 670,
+              "hp": 100,
+              "attack": 135,
+              "defence": 115,
+              "spAttack": 85,
+              "spDefence": 100,
+              "speed": 135,
+              "generation": 9,
+              "legendary": "True",
+              "region": "Paldea",
+              "effectiveness": null
+            },
+            {
+              "pokedex": 1008,
+              "name": "Miraidon",
+              "primaryType": "Electric",
+              "secondaryType": "Dragon",
+              "total": 670,
+              "hp": 100,
+              "attack": 85,
+              "defence": 100,
+              "spAttack": 135,
+              "spDefence": 115,
+              "speed": 135,
+              "generation": 9,
+              "legendary": "True",
+              "region": "Paldea",
+              "effectiveness": null
+            }
+          ],
+          "pagination": {
+            "limit": 8,
+            "total": 80,
+            "hasNext": true,
+            "hasPrevious": false,
+            "nextToken": "eyJsYXN0VmFsdWUiOjgsImxhc3RJZCI6OCwiZGlyZWN0aW9uIjoiQVNDIg==",
+            "previousToken": null
+          }
+        }
+      }
+    },
+    {
+      "request": {
+        "method": "GET",
+        "urlPath": "/pokemon/list",
+        "queryParameters": {
+          "effectiveness": {
+            "equalTo": "true"
+          }
+        }
+      },
+      "response": {
+        "status": 200,
+        "jsonBody": {
+          "data": [
+            {
+              "pokedex": 1,
+              "name": "Bulbasaur",
+              "primaryType": "Grass",
+              "secondaryType": "Poison",
+              "total": 318,
+              "hp": 45,
+              "attack": 49,
+              "defence": 49,
+              "spAttack": 65,
+              "spDefence": 65,
+              "speed": 45,
+              "generation": 1,
+              "legendary": "False",
+              "region": "Kanto",
+              "effectiveness": {
+                "typeName": "Grass Poison",
+                "noEffect": ["Flying"],
+                "doubleResistant": [],
+                "notVeryEffective": ["Grass", "Poison", "Bug", "Fairy"],
+                "neutral": ["Normal", "Electric", "Ice", "Dragon", "Dark"],
+                "effective": ["Fire", "Water", "Rock", "Steel"],
+                "superEffective": ["Ground", "Psychic"]
+              }
+            }
+          ],
+          "pagination": {
+            "limit": 8,
+            "total": 80,
+            "hasNext": true,
+            "hasPrevious": false,
+            "nextToken": "eyJsYXN0VmFsdWUiOjgsImxhc3RJZCI6OCwiZGlyZWN0aW9uIjoiQVNDIg==",
+            "previousToken": null
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+core:
+  environment: prod
+  db: pg
+  pg:
+    host: "${PG_HOST:postgres}"
+    port: ${PG_PORT:5432}
+    username: "${PG_USER:postgres}"
+    password: "${PG_PASSWORD:password}"
+    database: "${PG_DB:starter}"
+
+logging:
+  level:
+    root: WARN
+    com.github.starter: INFO 

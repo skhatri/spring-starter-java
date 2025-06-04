@@ -1,32 +1,206 @@
-version: '3.7'
+
 services:
 
-    postgres:
-      image: postgres:16.3
-      environment:
-          - POSTGRES_USER=postgres
-          - POSTGRES_PASSWORD=password
-          - POSTGRES_DB=postgres
-          - PGDATA=/var/lib/postgresql/data/pgdata
-          - APP=postgres 
-      ports:
-        - "5432:5432"
-      volumes:
-        #- ./postgres/data:/var/lib/postgresql/data
-        - ./db/pg.sql:/docker-entrypoint-initdb.d/pg.sql
-        - ./db/csv:/tmp/csv
-      container_name: postgres
-      healthcheck:
-        test: ["CMD-SHELL", "pg_isready -U postgres"]
-        interval: "20s"
-        timeout: "20s"
-        retries: 3
-      networks:
-        starter:
-          aliases:
-            - postgres
 
+  postgres:
+    profiles:
+      - app
+      - db
+    container_name: postgres
+    environment:
+      - "POSTGRES_USER=${POSTGRES_USER:-postgres}"
+      - "POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-password}"
+      - POSTGRES_DB=starter
+      - PGDATA=/data/postgres
+    networks:
+      - app-network      
+    healthcheck:
+      interval: 10s
+      retries: 3
+      test: [ CMD-SHELL, pg_isready ]
+      timeout: 5s
+    image: "postgres:${POSTGRES_VERSION:-17.0}"
+    volumes:
+      - "./scripts/containers/postgres/csv:/tmp/data/csv"
+      - "./db-migration/1-db-creation.sql:/docker-entrypoint-initdb.d/00-db-creation.sql"
+      - "./db-migration/2-db-user-setup.sql:/docker-entrypoint-initdb.d/01-setup.sql"
+      - postgres-data:/data/postgres
+    ports:
+      - "5432:5432"
+
+  db-migration:
+    profiles:
+      - app
+      - db
+    build: ./db-migration
+    container_name: db-migration
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - app-network
+    volumes:
+      - "./scripts/containers/postgres/csv:/tmp/data/csv"
+    environment:
+      - FLYWAY_URL=jdbc:postgresql://postgres:5432/starter
+      - FLYWAY_USER=postgres
+      - FLYWAY_PASSWORD=password
+      - FLYWAY_SCHEMAS=app
+      - FLYWAY_BASELINE_ON_MIGRATE=true
+      - FLYWAY_VALIDATE_ON_MIGRATE=true
+
+  # OpenTelemetry Collector
+  otel-collector:
+    profiles:
+      - app
+      - otel
+    image: otel/opentelemetry-collector:latest
+    container_name: otel-collector
+    command: ["--config=/etc/otel-collector-config.yaml"]
+    volumes:
+      - ./config/otel-collector-config.yaml:/etc/otel-collector-config.yaml
+    ports:
+      - "4317:4317"   # OTLP gRPC
+      - "4318:4318"   # OTLP HTTP
+      - "8888:8888"   # Prometheus metrics
+      - "8889:8889"   # Prometheus exporter
+    networks:
+      - app-network
+    depends_on:
+      jaeger:
+        condition: service_started
+      prometheus:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8888/metrics"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  # Jaeger for distributed tracing
+  jaeger:
+    profiles:
+      - app
+      - otel
+    image: jaegertracing/all-in-one:latest
+    container_name: jaeger
+    ports:
+      - "16686:16686"  # UI
+      - "14250:14250"  # Model
+      - "14268:14268"  # Collector
+      - "14269:14269"  # Admin
+    environment:
+      - COLLECTOR_OTLP_ENABLED=true
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:14269/"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # Prometheus for metrics collection
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    profiles:
+      - app
+      - otel
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    ports:
+      - "9090:9090"
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:9090/-/healthy"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  # Grafana for metrics visualization
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    profiles:
+      - app
+      - otel
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./config/grafana/provisioning:/etc/grafana/provisioning
+      - ./config/grafana/dashboards:/var/lib/grafana/dashboards
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_USERS_ALLOW_SIGN_UP=false
+    networks:
+      - app-network
+    depends_on:
+      prometheus:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:3000/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 15s
+
+  # Application service
+  app:
+    profiles:
+      - app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: spring-starter-java
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_R2DBC_URL=r2dbc:postgresql://postgres:5432/starter
+      - SPRING_R2DBC_USERNAME=starter_user
+      - SPRING_R2DBC_PASSWORD=starter
+      - PG_USER=postgres
+      - PG_PASSWORD=password
+      - PG_HOST=postgres
+      - PG_PORT=5432
+      - PG_DB=starter
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=spring-starter-java
+    networks:
+      - app-network
+    depends_on:
+      postgres:
+        condition: service_healthy
+      db-migration:
+        condition: service_completed_successfully
+      otel-collector:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  postgres-data:
+  prometheus-data:
+  grafana-data:
 
 networks:
-  starter: {}
+  app-network:
+    driver: bridge
 

@@ -1,0 +1,73 @@
+security:
+  config:
+    enabled: false
+
+spring:
+  r2dbc: {}
+    # Dynamic configuration via PostgreSQLTestConfiguratdddddion
+    # Connection details are set by @DynamicPropertySource
+  sql:
+    init:
+      mode: never  # Schema managed by testcontainers init script
+  
+  main:
+    web-application-type: reactive
+    
+  profiles:
+    active: test
+
+core:
+  environment: test
+  db: pg
+
+secrets:
+  masked-fields:
+    - password
+    - token
+    - key
+
+security-headers:
+  content-security-policy: "default-src 'self'"
+  x-content-type-options: "nosniff"
+  x-frame-options: "DENY"
+  x-xss-protection: "1; mode=block"
+  strict-transport-security: "max-age=31536000; includeSubDomains"
+  referrer-policy: "strict-origin-when-cross-origin"
+
+cors:
+  allowed-origins:
+    - "http://localhost:3000"
+  allowed-methods:
+    - "GET"
+    - "POST"
+    - "PUT"
+    - "DELETE"
+    - "OPTIONS"
+  allowed-headers:
+    - "*"
+  exposed-headers:
+    - "*"
+  allow-credentials: true
+  max-age: 3600
+
+logging:
+  level:
+    root: INFO
+    com.github.starter: DEBUG
+    org.springframework.web: INFO
+    org.testcontainers: INFO
+    org.postgresql: DEBUG
+    io.r2dbc.postgresql: DEBUG
+    org.springframework.r2dbc: DEBUG
+    
+  pattern:
+    console: "%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n"
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "health,info"
+  endpoint:
+    health:
+      show-details: always 

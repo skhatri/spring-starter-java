@@ -1,26 +1,16 @@
 FROM openjdk:21-jdk
-
 ARG UID="10000"
 ENV LANGUAGE='en_US:en'
-
 EXPOSE 8080
-
 RUN mkdir -p /opt/work/app && ln -s /opt/work/app /libs && mkdir -p /opt/work/db-migrations && ln -s /opt/work/db-migrations /opt/work/db
-
 WORKDIR /opt/work/app
-
-RUN groupadd -g ${UID} -r app && useradd -u ${UID} -g app -r app \
-    && chown -R app:app /opt/work /libs && chmod -R g+rwx /opt/work
-
+RUN groupadd -g ${UID} -r app && useradd -u ${UID} -g app -r app &&
+    chown -R app:app /opt/work /libs && chmod -R g+rwx /opt/work
 USER app
 COPY --chown=app:app app/build/libs/app.jar /opt/work/app/app.jar
 COPY --chown=app:app db /opt/work/db
-
 ENV JAVA_OPTS=""
 ENV DATASET_DIR="/opt/work/db"
-ENV APP_DB="duckdb"
-#setting it so it is easy to use postgres container when APP_DB is pg
+ENV APP_DB="pg"
 ENV POSTGRES_HOST="postgres"
 CMD [ "java", "-jar", "/opt/work/app/app.jar" ]
-
-

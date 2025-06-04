@@ -1,0 +1,176 @@
+country,capital,area,continent
+United States,Washington D.C.,9833517,North America
+Canada,Ottawa,9984670,North America
+Mexico,Mexico City,1964375,North America
+Guatemala,Guatemala City,108889,North America
+Belize,Belmopan,22966,North America
+El Salvador,San Salvador,21041,North America
+Honduras,Tegucigalpa,112492,North America
+Nicaragua,Managua,130370,North America
+Costa Rica,San José,51100,North America
+Panama,Panama City,75420,North America
+Cuba,Havana,109884,North America
+Jamaica,Kingston,10991,North America
+Haiti,Port-au-Prince,27750,North America
+Dominican Republic,Santo Domingo,48671,North America
+Trinidad and Tobago,Port of Spain,5128,North America
+Barbados,Bridgetown,430,North America
+Brazil,Brasília,8514877,South America
+Argentina,Buenos Aires,2780400,South America
+Chile,Santiago,756096,South America
+Colombia,Bogotá,1141748,South America
+Peru,Lima,1285216,South America
+Venezuela,Caracas,912050,South America
+Uruguay,Montevideo,176215,South America
+Paraguay,Asunción,406752,South America
+Bolivia,Sucre,1098581,South America
+Ecuador,Quito,283561,South America
+Guyana,Georgetown,214969,South America
+Suriname,Paramaribo,163820,South America
+United Kingdom,London,243610,Europe
+France,Paris,643801,Europe
+Germany,Berlin,357022,Europe
+Italy,Rome,301340,Europe
+Spain,Madrid,505370,Europe
+Netherlands,Amsterdam,41543,Europe
+Belgium,Brussels,30528,Europe
+Switzerland,Bern,41277,Europe
+Austria,Vienna,83871,Europe
+Portugal,Lisbon,92090,Europe
+Sweden,Stockholm,450295,Europe
+Norway,Oslo,323802,Europe
+Denmark,Copenhagen,43094,Europe
+Finland,Helsinki,338424,Europe
+Poland,Warsaw,312679,Europe
+Czech Republic,Prague,78867,Europe
+Hungary,Budapest,93028,Europe
+Romania,Bucharest,238391,Europe
+Greece,Athens,131957,Europe
+Ireland,Dublin,70273,Europe
+Russia,Moscow,17098242,Europe
+Ukraine,Kyiv,603628,Europe
+Belarus,Minsk,207600,Europe
+Estonia,Tallinn,45227,Europe
+Latvia,Riga,64589,Europe
+Lithuania,Vilnius,65300,Europe
+Slovakia,Bratislava,49035,Europe
+Slovenia,Ljubljana,20273,Europe
+Croatia,Zagreb,56594,Europe
+Serbia,Belgrade,77474,Europe
+Bosnia and Herzegovina,Sarajevo,51197,Europe
+Montenegro,Podgorica,13812,Europe
+North Macedonia,Skopje,25713,Europe
+Albania,Tirana,28748,Europe
+Bulgaria,Sofia,110879,Europe
+Moldova,Chișinău,33846,Europe
+Iceland,Reykjavik,103000,Europe
+Luxembourg,Luxembourg City,2586,Europe
+Malta,Valletta,316,Europe
+China,Beijing,9596960,Asia
+India,New Delhi,3287263,Asia
+Japan,Tokyo,377915,Asia
+South Korea,Seoul,100210,Asia
+North Korea,Pyongyang,120538,Asia
+Thailand,Bangkok,513120,Asia
+Vietnam,Hanoi,331210,Asia
+Indonesia,Jakarta,1904569,Asia
+Malaysia,Kuala Lumpur,329847,Asia
+Singapore,Singapore,719,Asia
+Philippines,Manila,300000,Asia
+Bangladesh,Dhaka,147570,Asia
+Pakistan,Islamabad,881913,Asia
+Afghanistan,Kabul,652864,Asia
+Iran,Tehran,1648195,Asia
+Turkey,Ankara,783562,Asia
+Saudi Arabia,Riyadh,2149690,Asia
+United Arab Emirates,Abu Dhabi,83600,Asia
+Israel,Jerusalem,20770,Asia
+Jordan,Amman,89342,Asia
+Lebanon,Beirut,10400,Asia
+Iraq,Baghdad,438317,Asia
+Syria,Damascus,185180,Asia
+Yemen,Sanaa,527968,Asia
+Oman,Muscat,309500,Asia
+Qatar,Doha,11586,Asia
+Kuwait,Kuwait City,17818,Asia
+Bahrain,Manama,765,Asia
+Kazakhstan,Nur-Sultan,2724900,Asia
+Uzbekistan,Tashkent,447400,Asia
+Turkmenistan,Ashgabat,488100,Asia
+Kyrgyzstan,Bishkek,199951,Asia
+Tajikistan,Dushanbe,143100,Asia
+Mongolia,Ulaanbaatar,1564110,Asia
+Myanmar,Naypyidaw,676578,Asia
+Laos,Vientiane,236800,Asia
+Cambodia,Phnom Penh,181035,Asia
+Sri Lanka,Colombo,65610,Asia
+Nepal,Kathmandu,147181,Asia
+Bhutan,Thimphu,38394,Asia
+Maldives,Malé,298,Asia
+Brunei,Bandar Seri Begawan,5765,Asia
+Taiwan,Taipei,36193,Asia
+Georgia,Tbilisi,69700,Asia
+Armenia,Yerevan,29743,Asia
+Azerbaijan,Baku,86600,Asia
+Egypt,Cairo,1001449,Africa
+South Africa,Cape Town,1221037,Africa
+Nigeria,Abuja,923768,Africa
+Kenya,Nairobi,580367,Africa
+Morocco,Rabat,446550,Africa
+Algeria,Algiers,2381741,Africa
+Libya,Tripoli,1759540,Africa
+Tunisia,Tunis,163610,Africa
+Ghana,Accra,238533,Africa
+Ethiopia,Addis Ababa,1104300,Africa
+Tanzania,Dodoma,947300,Africa
+Uganda,Kampala,241038,Africa
+Zimbabwe,Harare,390757,Africa
+Botswana,Gaborone,581730,Africa
+Namibia,Windhoek,824292,Africa
+Sudan,Khartoum,1861484,Africa
+Chad,N'Djamena,1284000,Africa
+Niger,Niamey,1267000,Africa
+Mali,Bamako,1240192,Africa
+Mauritania,Nouakchott,1030700,Africa
+Senegal,Dakar,196722,Africa
+Guinea,Conakry,245857,Africa
+Sierra Leone,Freetown,71740,Africa
+Liberia,Monrovia,111369,Africa
+Ivory Coast,Yamoussoukro,322463,Africa
+Burkina Faso,Ouagadougou,274200,Africa
+Cameroon,Yaoundé,475442,Africa
+Central African Republic,Bangui,622984,Africa
+Democratic Republic of the Congo,Kinshasa,2344858,Africa
+Republic of the Congo,Brazzaville,342000,Africa
+Gabon,Libreville,267668,Africa
+Equatorial Guinea,Malabo,28051,Africa
+São Tomé and Príncipe,São Tomé,964,Africa
+Angola,Luanda,1246700,Africa
+Zambia,Lusaka,752618,Africa
+Malawi,Lilongwe,118484,Africa
+Mozambique,Maputo,801590,Africa
+Madagascar,Antananarivo,587041,Africa
+Mauritius,Port Louis,2040,Africa
+Seychelles,Victoria,452,Africa
+Comoros,Moroni,2235,Africa
+Djibouti,Djibouti City,23200,Africa
+Eritrea,Asmara,117600,Africa
+Somalia,Mogadishu,637657,Africa
+Rwanda,Kigali,26338,Africa
+Burundi,Gitega,27830,Africa
+Lesotho,Maseru,30355,Africa
+Eswatini,Mbabane,17364,Africa
+Australia,Canberra,7692024,Oceania
+New Zealand,Wellington,268838,Oceania
+Fiji,Suva,18274,Oceania
+Papua New Guinea,Port Moresby,462840,Oceania
+Samoa,Apia,2831,Oceania
+Tonga,Nuku'alofa,747,Oceania
+Vanuatu,Port Vila,12189,Oceania
+Solomon Islands,Honiara,28896,Oceania
+Palau,Ngerulmud,459,Oceania
+Marshall Islands,Majuro,181,Oceania
+Micronesia,Palikir,702,Oceania
+Nauru,Yaren,21,Oceania
+Kiribati,Tarawa,811,Oceania
+Tuvalu,Funafuti,26,Oceania 

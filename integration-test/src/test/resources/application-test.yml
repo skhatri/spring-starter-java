@@ -1,0 +1,9 @@
+# Integration Test Configuration
+# These tests connect to a running application instance via HTTP/GraphQL
+# No direct database configuration needed
+
+logging:
+  level:
+    com.github.starter: INFO
+    com.intuit.karate: INFO
+    root: INFO 

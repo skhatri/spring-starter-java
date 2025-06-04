@@ -1,0 +1,42 @@
+secrets:
+  mount-paths:
+    - /mnt/secrets
+    - /var/run/secrets
+  
+  env-prefixes:
+    - SECRET_
+    - CREDENTIAL_
+  
+  masked-fields:
+    - password
+    - token
+    - key
+    - secret
+    - credential
+    - auth
+
+security-headers:
+  content-security-policy: "default-src 'self'; script-src 'self'; object-src 'none'; base-uri 'self'"
+  x-content-type-options: "nosniff"
+  x-frame-options: "DENY"
+  x-xss-protection: "1; mode=block"
+  strict-transport-security: "max-age=31536000; includeSubDomains"
+  referrer-policy: "no-referrer"
+
+cors:
+  allowed-origins:
+    - "http://localhost:3000"
+  allowed-methods:
+    - GET
+    - POST
+    - PUT
+    - DELETE
+    - OPTIONS
+  allowed-headers:
+    - Authorization
+    - Content-Type
+  exposed-headers:
+    - X-Request-ID
+  allow-credentials: true
+  max-age: 3600 
+

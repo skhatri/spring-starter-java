@@ -1,7 +1,5 @@
-#!/usr/bin/env bash
 set -o pipefail
 set -e
-
 ./gradlew app:clean app:build
 docker build --no-cache -t app . -f app/docker/Dockerfile.jvm
 if [[ $? -eq 0 ]];

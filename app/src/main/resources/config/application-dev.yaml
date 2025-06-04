@@ -1,0 +1,13 @@
+core:
+  environment: dev
+  db: pg
+  pg:
+    host: localhost
+    port: 5432
+    username: postgres
+    password: password
+    database: starter
+
+logging:
+  level:
+    com.github.starter: DEBUG 

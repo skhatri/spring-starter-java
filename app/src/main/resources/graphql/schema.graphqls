@@ -1,4 +1,3 @@
-
 # Interface representing the basic server status information
 interface ServerStat {
     # The current status of the server.
@@ -18,9 +17,10 @@ type Status implements ServerStat {
     status: String!
 
     # The timestamp of when the server status was recorded.
-    # This field is required and must be a non-nullable String in ISO 8601 format.
+    # This field is required and must be a non-nullable String.
     server_time: String!
 }
+
 
 
 # Type representing the server status with additional reason information.
@@ -39,62 +39,130 @@ type StatusReason implements ServerStat {
     reason: String!
 }
 
-
-# Type representing a Pokémon with various attributes.
+# Type representing a Pokemon
 type Pokemon {
-    # The name of the Pokémon.
-    # This field is required and must be a non-nullable String.
+    # The ID of the Pokemon in the Pokedex
+    pokedex: Int!
+    
+    # The name of the Pokemon
     name: String!
-
-    # The base stat value of the Pokémon. Legendary pokemons usually have higher base stat.
-    # This field is required and must be a non-nullable Int.
-    baseStat: Int!
-
-    # The primary type of the Pokémon, e.g., 'electric', 'fire', etc.
-    # This field is required and must be a non-nullable String.
+    
+    # The primary type of the Pokemon
     primaryType: String!
-
-    # The secondary type of the Pokémon, if any. Some pokemons have two types.
-    # This field is optional and can be a nullable String.
+    
+    # The secondary type of the Pokemon (may be null)
     secondaryType: String
-
-    # The location where the Pokémon is found.
-    # This field is required and must be a non-nullable String.
-    location: String!
-
-    # Indicates whether the Pokémon is legendary or not.
-    # This field is optional and can be a nullable Boolean.
-    legendary: Boolean
-
-    # The list of weaknesses of the Pokémon, e.g., ['ground', 'water'].
-    # This field is required and must be a non-nullable list of non-nullable Strings.
-    weakness: [String!]!
-
-    # The height of the Pokémon in meters.
-    # This field is required and must be a non-nullable Float.
-    height: Float!
-
-    # The weight of the Pokémon in kilograms.
-    # This field is required and must be a non-nullable Float.
-    weight: Float!
+    
+    # The total base stats of the Pokemon
+    total: Int!
+    
+    # The HP stat of the Pokemon
+    hp: Int!
+    
+    # The attack stat of the Pokemon
+    attack: Int!
+    
+    # The defence stat of the Pokemon
+    defence: Int!
+    
+    # The special attack stat of the Pokemon
+    spAttack: Int!
+    
+    # The special defence stat of the Pokemon
+    spDefence: Int!
+    
+    # The speed stat of the Pokemon
+    speed: Int!
+    
+    # The generation the Pokemon was introduced in
+    generation: Int!
+    
+    # Whether the Pokemon is legendary
+    legendary: String
+    
+    # The region the Pokemon originates from
+    region: String!
+    
+    # The type effectiveness data for the Pokemon (loaded on demand)
+    effectiveness: Effectiveness
 }
 
-# The root Query type for fetching server status and Pokémon data.
+# Type representing the effectiveness of Pokemon types against other types
+type Effectiveness {
+    # The name of the type(s) this effectiveness data is for
+    typeName: String!
+    
+    # List of types that have no effect (0x damage)
+    noEffect: [String!]!
+    
+    # List of types that are double resistant (0.25x damage)
+    doubleResistant: [String!]!
+    
+    # List of types that are not very effective (0.5x damage)
+    notVeryEffective: [String!]!
+    
+    # List of types that do normal damage (1x damage)
+    neutral: [String!]!
+    
+    # List of types that are super effective (2x damage)
+    effective: [String!]!
+    
+    # List of types that are doubly effective (4x damage)
+    superEffective: [String!]!
+}
+
+# Paginated response containing Pokemon data and cursor information
+type PokemonPage {
+    # The list of Pokemon in this page
+    content: [Pokemon!]!
+    
+    # Cursor for the next page (if available)
+    nextCursor: String
+    
+    # Cursor for the previous page (if available)
+    previousCursor: String
+    
+    # Whether there is a next page
+    hasNext: Boolean!
+    
+    # Whether there is a previous page
+    hasPrevious: Boolean!
+    
+    # Total count of all Pokemon (using Int for GraphQL compatibility)
+    totalCount: Int!
+    
+    # Number of items in this page
+    pageSize: Int!
+}
+
+# Enum for sort directions
+enum SortDirection {
+    ASC
+    DESC
+}
+
+# Root query type for the GraphQL API
 type Query {
-    # Fetches the basic status of the server.
-    # This field returns a Status type which implements ServerStat.
-    # The Status type includes fields for status and server time.
-    health: Status!
-
-    # Fetches detailed server status including a reason for the status.
-    # This field returns a StatusReason type which implements ServerStat.
-    # The StatusReason type includes additional fields for reason in addition to status and server time.
-    detailedHealthCheck: StatusReason!
-
-    # Retrieves a list of Pokémon.
-    # This field returns a non-nullable list of Pokémon types.
-    # Each Pokémon in the list is non-nullable.
-    getPokemonList: [Pokemon!]
+    # Get information about the server status
+    # Returns a Status object with current server status.
+    status: Status!
+    
+    # Get a paginated list of Pokemon
+    # Returns a PokemonPage with cursor-based pagination
+    getPokemonList(
+        limit: Int = 50
+        cursor: String
+        sortField: String = "id"
+        sortDirection: SortDirection = ASC
+    ): PokemonPage!
+    
+    # Get a Pokemon by name
+    # Returns a Pokemon object for the given name
+    pokemon(name: String!): Pokemon
+    
+    # Get effectiveness data for a type
+    # Returns effectiveness data for the given type
+    effectiveness(typeName: String!): Effectiveness
 }
 
 # Type representing the server status with specific implementation details.
@@ -110,8 +178,6 @@ type StatusStream implements ServerStat {
     # This field is required and must be a non-nullable String in ISO 8601 format.
     server_time: String!
 }
-
-
 
 type Subscription {
     streamHealth: StatusStream!

@@ -15,23 +15,72 @@ endpoints:
 server.error.whitelabel.enabled: false
 
 spring:
+  application:
+    name: spring-starter-java
+  profiles:
+    active: dev
   graphql:
     graphiql:
       enabled: true
     websocket:
       path: /graphql
 
-core:
-  db: ${APP_DB:duckdb}
-  duckdb:
-    url: "jdbc:duckdb:/tmp/starter.db"
-    init:
-      file: "${DATASET_DIR:./db}/duckdb.sql"
+# Spring Boot Actuator Configuration
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,prometheus
+  endpoint:
+    health:
+      show-details: always
+    metrics:
       enabled: true
+    info:
+      enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+      slo:
+        http.server.requests: 50ms, 100ms, 200ms, 500ms
+  tracing:
+    sampling:
+      probability: 1.0
 
+# OpenTelemetry Configuration
+otel:
+  sdk:
+    disabled: false
+  exporter:
+    otlp:
+      enabled: true
+      endpoint: http://localhost:4317
+  metrics:
+    exporter: prometheus
+  logs:
+    exporter: otlp
+  resource:
+    attributes:
+      service.name: ${spring.application.name}
+
+core:
+  db: pg
+  environment: default
+  version: 1.0.0
   pg:
-    host: ${POSTGRES_HOST:localhost}
-    port: ${POSTGRES_PORT:5432}
-    username: ${POSTGRES_USER:starter_user}
-    password: ${POSTGRES_PASSWORD:starter}
-    database: ${POSTGRES_DB:starter}
+    host: localhost
+    port: 5432
+    username: postgres
+    password: password
+    database: starter 
+
+logging:
+  level:
+    root: INFO
+    com.github.starter: DEBUG

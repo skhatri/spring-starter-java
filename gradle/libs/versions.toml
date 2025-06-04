@@ -1,0 +1,149 @@
+[versions]
+spring-boot = "3.5.0"
+spring-dependency-management = "1.1.7"
+
+# Testing
+jupiter = "5.13.1"
+junitPlatform = "1.13.1"
+karate = "1.4.1"
+testcontainers = "1.20.1"
+wiremock-testcontainers = "1.0-alpha-14"
+reactor-test="3.6.18"
+mockito="5.18.0"
+
+# Database
+r2dbc-postgresql = "1.0.5.RELEASE"
+spring-data-r2dbc = "3.5.1"
+testcontainers-r2dbc = "1.21.1"
+postgresql-jdbc="42.7.7"
+
+# Libraries
+jackson = "2.18.4"
+snakeyaml = "2.4"
+
+# Plugins
+sonarqube = "5.1.0.4882"
+errorprone = "2.38.0"
+errorprone-plugin = "4.2.0"
+spotbugs = "6.2.0"
+spotbugs-annotations = "4.7.3"
+dependency-check = "9.0.9"
+owasp-dependency-check = "12.1.1"
+
+# Observability
+opentelemetry = "1.50.0"
+opentelemetry-instrumentation = "2.16.0"
+micrometer = "1.12.5"
+micrometer-tracing = "1.2.3"
+logstash-logback = "7.4"
+
+[plugins]
+spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
+sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
+jacoco = { id = "jacoco" }
+errorprone = { id = "net.ltgt.errorprone", version.ref = "errorprone-plugin" }
+spotbugs = { id = "com.github.spotbugs", version.ref = "spotbugs" }
+dependency-check = { id = "org.owasp.dependencycheck", version.ref = "dependency-check" }
+
+[libraries]
+spring-boot-starter-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
+spring-boot-starter-reactor-netty = { module = "org.springframework.boot:spring-boot-starter-reactor-netty" }
+spring-boot-starter = { module = "org.springframework.boot:spring-boot-starter" }
+spring-boot-starter-websocket = { module = "org.springframework.boot:spring-boot-starter-websocket" }
+spring-boot-starter-graphql = { module = "org.springframework.boot:spring-boot-starter-graphql" }
+spring-boot-starter-log4j2 = { module = "org.springframework.boot:spring-boot-starter-log4j2" }
+spring-boot-starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+spring-boot-test = { module = "org.springframework.boot:spring-boot-test" }
+spring-boot-starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+spring-graphql-test = { module = "org.springframework.graphql:spring-graphql-test" }
+
+
+jackson-bom = { module = "com.fasterxml.jackson:jackson-bom", version.ref = "jackson" }
+snakeyaml = { module = "org.yaml:snakeyaml", version.ref = "snakeyaml" }
+
+r2dbc-postgresql = { module = "org.postgresql:r2dbc-postgresql", version.ref = "r2dbc-postgresql" }
+spring-data-r2dbc = { module = "org.springframework.data:spring-data-r2dbc", version.ref = "spring-data-r2dbc" }
+postgresql-jdbc = { module = "org.postgresql:postgresql", version.ref = "postgresql-jdbc" }
+
+junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jupiter" }
+junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter" }
+junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "jupiter" }
+junit-platform-commons = { module = "org.junit.platform:junit-platform-commons", version.ref = "junitPlatform" }
+junit-platform-runner = { module = "org.junit.platform:junit-platform-runner", version.ref = "junitPlatform" }
+junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junitPlatform" }
+junit-platform-engine = { module = "org.junit.platform:junit-platform-engine", version.ref = "junitPlatform" }
+
+karate-junit5 = { module = "com.intuit.karate:karate-junit5", version.ref = "karate" }
+testcontainers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
+testcontainers-junit-jupiter = { module = "org.testcontainers:junit-jupiter", version.ref = "testcontainers" }
+testcontainers-postgresql = { module = "org.testcontainers:postgresql", version.ref = "testcontainers" }
+testcontainers-r2dbc = { module = "org.testcontainers:r2dbc", version.ref = "testcontainers-r2dbc" }
+wiremock-testcontainers = { module = "org.wiremock.integrations.testcontainers:wiremock-testcontainers-module", version.ref = "wiremock-testcontainers" }
+reactor-test = { module = "io.projectreactor:reactor-test", version.ref = "reactor-test" }
+mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
+mockito-junit-jupiter = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
+
+opentelemetry-api = { module = "io.opentelemetry:opentelemetry-api", version.ref = "opentelemetry" }
+opentelemetry-sdk = { module = "io.opentelemetry:opentelemetry-sdk", version.ref = "opentelemetry" }
+opentelemetry-context = { module = "io.opentelemetry:opentelemetry-context", version.ref = "opentelemetry" }
+opentelemetry-exporter-otlp = { module = "io.opentelemetry:opentelemetry-exporter-otlp", version.ref = "opentelemetry" }
+opentelemetry-instrumentation-annotations = { module = "io.opentelemetry.instrumentation:opentelemetry-instrumentation-annotations", version.ref = "opentelemetry-instrumentation" }
+opentelemetry-spring-boot-starter = { module = "io.opentelemetry.instrumentation:opentelemetry-spring-boot-starter", version.ref = "opentelemetry-instrumentation" }
+opentelemetry-instrumentation-bom = { module = "io.opentelemetry.instrumentation:opentelemetry-instrumentation-bom", version.ref = "opentelemetry-instrumentation" }
+
+micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-prometheus", version.ref = "micrometer" }
+micrometer-tracing-bridge-otel = { module = "io.micrometer:micrometer-tracing-bridge-otel", version.ref = "micrometer-tracing" }
+
+errorprone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone" }
+errorprone-annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "errorprone" }
+spotbugs-annotations = { module = "com.github.spotbugs:spotbugs-annotations", version.ref = "spotbugs-annotations" }
+
+[bundles]
+spring-boot-core = [
+    "spring-boot-starter-webflux", 
+    "spring-boot-starter-reactor-netty", 
+    "spring-boot-starter", 
+    "spring-boot-starter-websocket", 
+    "spring-boot-starter-graphql"
+]
+spring-boot-logging = ["spring-boot-starter-log4j2"]
+database = ["r2dbc-postgresql", "spring-data-r2dbc", "postgresql-jdbc"]
+testing-junit = [
+    "junit-jupiter-api", 
+    "junit-jupiter-params", 
+    "junit-platform-commons", 
+    "junit-platform-runner"
+]
+testing-runtime = [
+    "junit-jupiter-engine", 
+    "junit-platform-launcher", 
+    "junit-platform-engine"
+]
+testing-integration = [
+    "testcontainers", 
+    "testcontainers-junit-jupiter", 
+    "testcontainers-postgresql",
+    "testcontainers-r2dbc",
+    "wiremock-testcontainers", 
+    "karate-junit5"
+]
+testing-mockito = [
+    "mockito-core",
+    "mockito-junit-jupiter"
+]
+spring-testing = [
+    "spring-graphql-test", 
+    "spring-boot-test", 
+    "spring-boot-starter-test"
+]
+observability = [
+    "opentelemetry-api",
+    "opentelemetry-sdk",
+    "opentelemetry-context",
+    "opentelemetry-exporter-otlp",
+    "opentelemetry-instrumentation-annotations",
+    "opentelemetry-spring-boot-starter",
+    "micrometer-registry-prometheus",
+    "micrometer-tracing-bridge-otel"
+] 
