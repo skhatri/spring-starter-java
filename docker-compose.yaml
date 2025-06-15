@@ -163,7 +163,7 @@ services:
       - app
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: app/docker/Dockerfile.jvm
     container_name: spring-starter-java
     ports:
       - "8080:8080"
