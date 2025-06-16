@@ -22,29 +22,34 @@ jackson = "2.18.4"
 snakeyaml = "2.4"
 
 # Plugins
-sonarqube = "5.1.0.4882"
+jacoco = "0.8.11"
 errorprone = "2.38.0"
-errorprone-plugin = "4.2.0"
+errorprone-plugin = "3.1.0"
+spotbugs-plugin = "6.0.8"
 spotbugs = "6.2.0"
 spotbugs-annotations = "4.7.3"
 dependency-check = "9.0.9"
 owasp-dependency-check = "12.1.1"
+flyway = "10.21.0"
+
+# Build
+gradle-wrapper = "8.7"
 
 # Observability
 opentelemetry = "1.50.0"
 opentelemetry-instrumentation = "2.16.0"
-micrometer = "1.12.5"
+micrometer = "1.15.1"
 micrometer-tracing = "1.2.3"
 logstash-logback = "7.4"
 
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
 spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "spring-dependency-management" }
-sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
 jacoco = { id = "jacoco" }
 errorprone = { id = "net.ltgt.errorprone", version.ref = "errorprone-plugin" }
-spotbugs = { id = "com.github.spotbugs", version.ref = "spotbugs" }
+spotbugs = { id = "com.github.spotbugs", version.ref = "spotbugs-plugin" }
 dependency-check = { id = "org.owasp.dependencycheck", version.ref = "dependency-check" }
+flyway = { id = "org.flywaydb.flyway", version.ref = "flyway" }
 
 [libraries]
 spring-boot-starter-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
@@ -103,7 +108,6 @@ spotbugs-annotations = { module = "com.github.spotbugs:spotbugs-annotations", ve
 spring-boot-core = [
     "spring-boot-starter-webflux", 
     "spring-boot-starter-reactor-netty", 
-    "spring-boot-starter", 
     "spring-boot-starter-websocket", 
     "spring-boot-starter-graphql"
 ]

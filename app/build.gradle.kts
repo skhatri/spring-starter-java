@@ -1,10 +1,9 @@
 plugins {
-    alias(libs.plugins.sonarqube)
     alias(libs.plugins.jacoco)
     alias(libs.plugins.spring.boot)
     alias(libs.plugins.spring.dependency.management)
-    id("net.ltgt.errorprone")
-    id("com.github.spotbugs")
+    alias(libs.plugins.errorprone)
+    alias(libs.plugins.spotbugs)
     alias(libs.plugins.dependency.check)
 }
 java {
@@ -14,19 +13,9 @@ java {
         languageVersion = JavaLanguageVersion.of(21)
     }
 }
-sonarqube {
-    properties {
-        property("sonar.projectName", "${project.name}")
-        property("sonar.host.url", "http://localhost:9000")
-        property("sonar.projectKey", "${rootProject.name}-${project.name}")
-        property("sonar.projectVersion", "${project.version}")
-        property("sonar.junit.reportPaths", "${projectDir}/build/test-results/test")
-        property("sonar.coverage.jacoco.xmlReportPaths", "${projectDir}/build/reports/jacoco/test/jacocoTestReport.xml")
-        property("sonar.coverage.exclusions", "**/R.java,**/proto/*.java")
-    }
-}
+
 jacoco {
-    toolVersion = "0.8.11"
+    toolVersion = libs.versions.jacoco.get()
 }
 tasks.jacocoTestReport {
     dependsOn(tasks.test)

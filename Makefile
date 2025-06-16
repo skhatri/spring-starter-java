@@ -34,7 +34,7 @@ run:
 
 # Docker tasks
 image: build
-	@docker build --no-cache --build-arg BUILD_DATE=$(DATE) --build-arg COMMIT_HASH=$(COMMIT_HASH) -t spring-starter-java .
+	@docker build --no-cache --build-arg BUILD_DATE=$(DATE) --build-arg COMMIT_HASH=$(COMMIT_HASH) -t spring-starter-java -f app/Dockerfile.jvm .
 
 docker-build: build
 	@docker compose build

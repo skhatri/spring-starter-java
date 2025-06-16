@@ -6,7 +6,7 @@
 [![Spring Boot 3.5](https://img.shields.io/badge/Spring%20Boot-3.5-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 
-[Quick Start](#-quick-start) | [API Examples](#-api-examples) | [Architecture](#️-architecture) | [Testing](#-testing) | [Monitoring](#-observability)
+[Quick Start](#-quick-start) | [API Examples](#-api-examples) | [Architecture](#️-architecture) | [Testing](#-testing) | [OpenTelemetry](#-observability--opentelemetry)
 
 ---
 
@@ -268,40 +268,269 @@ open app/build/reports/jacoco/test/html/index.html
 
 ---
 
-## 🔍 Observability
+## 🔍 Observability & OpenTelemetry
 
-### 📊 Full Stack Monitoring
+### 🎯 Complete Observability Stack
+This project implements **production-grade observability** using the **OpenTelemetry standard** with full metrics, traces, and logs integration.
+
 ```bash
-# Start monitoring stack
+# Start complete monitoring stack
 docker-compose --profile=otel up -d
 
 # Access dashboards
-open http://localhost:3000    # Grafana (admin/admin)
-open http://localhost:9090    # Prometheus  
-open http://localhost:16686   # Jaeger tracing
+open http://localhost:3000    # Grafana (admin/admin) - Dashboards & Visualization
+open http://localhost:9090    # Prometheus - Metrics Collection
+open http://localhost:16686   # Jaeger - Distributed Tracing
 ```
 
-### 📈 Key Metrics
-- **Application**: Request rate, response time, error rate
-- **JVM**: Memory usage, GC performance, thread pools
-- **Database**: Connection pools, query performance, R2DBC metrics
-- **Business**: Pokémon queries, type effectiveness lookups
+### 🔧 OpenTelemetry Architecture
+
+```
+┌─ Spring Boot App ─────────────────────┐
+│  📊 Micrometer Metrics               │
+│  🔍 Custom Traces (Pokemon API)      │
+│  📝 Structured Logging               │
+│         │                            │
+│         ▼ OTLP (gRPC)                │
+└───────────────────────────────────────┘
+         │ :4317
+         ▼
+┌─ OpenTelemetry Collector ─────────────┐
+│  🔄 Receives: Traces, Metrics, Logs  │
+│  🎯 Processes: Batching, Filtering    │
+│  📤 Exports to: Jaeger, Prometheus   │
+└───────────────────────────────────────┘
+         │                    │
+         ▼ :4317              ▼ :8889
+┌─ Jaeger ─────────┐  ┌─ Prometheus ──┐
+│  🔍 Trace Storage │  │  📊 Metrics   │
+│  🕸️ Service Map   │  │  📈 Time Series│
+└───────────────────┘  └───────────────┘
+         │                    │
+         ▼                    ▼
+┌─ Grafana ─────────────────────────────┐
+│  📊 Unified Dashboards               │
+│  🔍 Trace Correlation               │
+│  🚨 Alerting & Monitoring           │
+└───────────────────────────────────────┘
+```
+
+### 📊 Metrics Collection
+
+#### 🎯 Application Metrics (Micrometer + Spring Boot Actuator)
+```bash
+# All available metrics
+curl http://localhost:8080/actuator/metrics | jq '.names[]' | head -20
+
+# JVM metrics
+curl http://localhost:8080/actuator/metrics/jvm.memory.used
+curl http://localhost:8080/actuator/metrics/jvm.gc.pause
+curl http://localhost:8080/actuator/metrics/jvm.threads.live
+
+# HTTP request metrics
+curl http://localhost:8080/actuator/metrics/http.server.requests
+
+# R2DBC database metrics
+curl http://localhost:8080/actuator/metrics/r2dbc.pool.acquired
+```
+
+#### 📈 Key Performance Indicators
+- **🚀 Request Rate**: `http_server_requests_total` - Requests per second
+- **⏱️ Response Time**: `http_server_requests_duration` - P50, P95, P99 latencies
+- **❌ Error Rate**: `http_server_requests_total{status=~"4..|5.."}` - Error percentage
+- **💾 Memory Usage**: `jvm_memory_used_bytes` - Heap and non-heap memory
+- **🔗 Database Connections**: `r2dbc_pool_acquired_total` - Connection pool health
+- **🎯 Business Metrics**: `pokemon_queries_total`, `effectiveness_lookups_total`
 
 ### 🔍 Distributed Tracing
-- **Request Correlation**: Track requests across services
-- **Performance Bottlenecks**: Identify slow database queries
-- **Error Investigation**: Root cause analysis with stack traces
 
-### 📋 Health Checks
+#### 🎯 Custom Pokemon API Tracing
+The application includes **custom instrumentation** for Pokemon-specific operations:
+
+```java
+// Automatic HTTP request tracing
+GET /pokemon/list → Span: "GET /pokemon/list"
+  ├── pokemon.list.rest → Custom business logic span
+  ├── SELECT app.pokemons → Database query span  
+  └── pokemon.enrich_with_effectiveness → Data enrichment span
+
+// GraphQL query tracing  
+POST /graphql → Span: "POST /graphql"
+  ├── pokemon.graphql.query → GraphQL resolver span
+  ├── pokemon.fetch_by_name → Data fetching span
+  └── SELECT app.pokemons → Database query span
+```
+
+#### 🔍 Trace Attributes & Context
+Each trace includes rich contextual information:
+- **HTTP Attributes**: Method, URL, status code, user agent
+- **Pokemon Attributes**: `pokemon.name`, `pokemon.type`, `pokemon.count`
+- **Database Attributes**: Query type, table name, execution time
+- **Error Attributes**: Exception type, error message, stack trace
+
+#### 🕸️ Service Map & Dependencies
+Jaeger automatically builds a **service dependency map** showing:
+- Request flow between components
+- Service-to-service communication patterns
+- Performance bottlenecks and error rates
+- Database query performance
+
+### 📋 Health Checks & Monitoring
+
+#### 🏥 Application Health
 ```bash
-# Application health
+# Basic health check
 curl http://localhost:8080/actuator/health
 
-# Detailed health with components
+# Detailed health with all components
 curl http://localhost:8080/actuator/health | jq '.'
+# Returns: database, diskSpace, ping, r2dbc status
 
-# Metrics endpoint
-curl http://localhost:8080/actuator/metrics
+# Readiness probe (Kubernetes-ready)
+curl http://localhost:8080/actuator/health/readiness
+
+# Liveness probe (Kubernetes-ready)  
+curl http://localhost:8080/actuator/health/liveness
+```
+
+#### 📊 Prometheus Metrics Endpoint
+```bash
+# Prometheus-formatted metrics
+curl http://localhost:8080/actuator/prometheus
+
+# Sample output:
+# http_server_requests_total{method="GET",uri="/pokemon/list",status="200"} 42.0
+# http_server_requests_seconds_count{uri="/pokemon/list",status="200"} 50.0
+# jvm_memory_used_bytes{area="heap",id="G1 Eden Space"} 1.048576E7
+# jvm_threads_live_threads 48.0
+# jvm_threads_peak_threads 52.0
+# jvm_threads_daemon_threads 44.0
+# r2dbc_pool_acquired_total{name="connectionFactory"} 15.0
+```
+
+### 🎯 Grafana Dashboards
+
+#### 📊 Pre-configured Dashboards
+1. **🚀 Spring Boot Overview**: JVM metrics, HTTP requests, error rates, thread monitoring
+2. **🗄️ Database Performance**: R2DBC connections, query performance
+3. **🎯 Pokemon API Metrics**: Business-specific KPIs and usage patterns
+4. **🔍 Distributed Tracing**: Request flow visualization and performance analysis
+
+#### 📈 Key Visualizations
+- **Request Rate Timeline**: Requests/second over time with status code breakdown
+- **Response Time Heatmap**: P50/P95/P99 latency percentiles
+- **JVM Thread Monitoring**: Live, peak, and daemon thread counts over time
+- **HTTP Requests by URI**: Bar chart showing request distribution across endpoints
+- **Error Rate Alerts**: Automatic alerting when error rate > 5%
+- **Memory Usage Trends**: JVM heap usage with GC event correlation
+- **Database Connection Health**: Pool utilization and connection lifecycle
+
+### 🚨 Alerting & Monitoring
+
+#### 🔔 Built-in Alerts (Grafana)
+- **High Error Rate**: > 5% errors in 5-minute window
+- **Slow Response Time**: P95 latency > 500ms for 2 minutes
+- **Memory Pressure**: JVM heap usage > 85% for 5 minutes
+- **Database Issues**: R2DBC connection failures or timeouts
+
+#### 📱 Alert Channels
+Configure notifications via:
+- **Slack**: Real-time team notifications
+- **Email**: Critical issue escalation
+- **PagerDuty**: On-call engineer alerts
+- **Webhook**: Custom integrations
+
+### 🔧 OpenTelemetry Configuration
+
+#### 🎯 Environment Variables
+```bash
+# OpenTelemetry Collector endpoint
+OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+
+# Service identification
+OTEL_RESOURCE_ATTRIBUTES=service.name=spring-starter-java,service.version=1.0.0
+
+# Sampling configuration (production: 0.1 = 10%)
+OTEL_TRACES_SAMPLER=traceidratio
+OTEL_TRACES_SAMPLER_ARG=1.0
+
+# Batch export configuration
+OTEL_BSP_MAX_EXPORT_BATCH_SIZE=512
+OTEL_BSP_EXPORT_TIMEOUT=30s
+```
+
+#### 🔧 Custom Configuration
+The application includes custom OpenTelemetry configuration in `OpenTelemetryConfig.java`:
+- **OTLP Exporter**: Sends traces to collector via gRPC
+- **Resource Attributes**: Service name, version, environment
+- **Batch Span Processor**: Optimized for production throughput
+- **W3C Trace Context**: Standard trace propagation headers
+
+#### 📁 Configuration Files
+```bash
+# OpenTelemetry Collector configuration
+config/otel-collector-config.yaml    # Collector pipeline configuration
+
+# Docker Compose observability stack
+docker-compose.yaml                  # Services: otel-collector, jaeger, prometheus, grafana
+
+# Grafana dashboards and data sources
+config/grafana/                      # Pre-configured dashboards and provisioning
+├── dashboards/spring-boot-dashboard.json
+└── provisioning/
+    ├── dashboards/dashboards.yaml
+    └── datasources/datasources.yaml
+
+# Prometheus configuration
+config/prometheus.yml                # Scraping configuration and targets
+```
+
+### 🎯 Observability Best Practices
+
+#### ✅ What's Implemented
+- **📊 Golden Signals**: Latency, traffic, errors, saturation monitoring
+- **🔍 Structured Logging**: JSON logs with correlation IDs
+- **📈 SLI/SLO Tracking**: Service Level Indicators and Objectives
+- **🚨 Proactive Alerting**: Issues detected before user impact
+- **🔗 Trace Correlation**: Link logs, metrics, and traces
+- **📱 Dashboard Standardization**: Consistent visualization patterns
+
+#### 🎯 Production Recommendations
+- **Sampling**: Use 1-10% trace sampling in production
+- **Retention**: Keep traces for 7 days, metrics for 30 days
+- **Alerting**: Focus on user-impacting issues, avoid alert fatigue
+- **Dashboards**: Create role-specific views (dev, ops, business)
+- **Documentation**: Maintain runbooks for common issues
+
+### 🔍 Troubleshooting Observability
+
+#### 🚨 Common Issues
+```bash
+# Traces not appearing in Jaeger
+docker logs otel-collector | grep -i error
+docker logs jaeger | grep -i "received spans"
+
+# Metrics not in Prometheus
+curl http://localhost:8080/actuator/prometheus | grep pokemon
+docker logs prometheus | grep -i error
+
+# Grafana dashboard issues
+docker logs grafana | grep -i error
+# Check data source configuration at http://localhost:3000/datasources
+```
+
+#### 🔧 Debug Commands
+```bash
+# Verify OpenTelemetry collector is receiving data
+docker logs otel-collector --tail 50 | grep -E "(Span|Metric)"
+
+# Check application trace export
+docker logs spring-starter-java | grep -i "otel\|trace"
+
+# Test trace generation
+curl "http://localhost:8080/pokemon/pikachu" && \
+sleep 5 && \
+curl "http://localhost:16686/api/traces?service=spring-starter-java&limit=1"
 ```
 
 ---

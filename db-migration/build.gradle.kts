@@ -1,5 +1,5 @@
 plugins {
-    id("org.flywaydb.flyway") version "10.21.0"
+    alias(libs.plugins.flyway)
 }
 
 group = "com.github"

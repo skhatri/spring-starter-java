@@ -12,9 +12,21 @@ endpoints:
   cors.allowed-origins: http://localhost
   cors.allowed-methods: GET,POST
 
-server.error.whitelabel.enabled: false
+server:
+  error:
+    whitelabel:
+      enabled: false
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: on_param
+    include-exception: false
 
 spring:
+  web:
+    resources:
+      add-mappings: false
+  mvc:
+    throw-exception-if-no-handler-found: true
   application:
     name: spring-starter-java
   profiles:
@@ -30,7 +42,7 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics,prometheus
+        include: health,info,metrics,prometheus,otlp
   endpoint:
     health:
       show-details: always
@@ -53,14 +65,22 @@ management:
     sampling:
       probability: 1.0
 
-# OpenTelemetry Configuration
+  otlp:
+    metrics:
+      export:
+        url: ${OTEL_EXPORTER_OTLP_ENDPOINT:http://localhost:4317}
+        headers:
+          service.name: ${spring.application.name}
+        timeout: 10s
+        compression: gzip
+
 otel:
   sdk:
     disabled: false
   exporter:
     otlp:
       enabled: true
-      endpoint: http://localhost:4317
+      endpoint: ${OTEL_EXPORTER_OTLP_ENDPOINT:http://localhost:4317}
   metrics:
     exporter: prometheus
   logs:
@@ -68,6 +88,7 @@ otel:
   resource:
     attributes:
       service.name: ${spring.application.name}
+
 
 core:
   db: pg

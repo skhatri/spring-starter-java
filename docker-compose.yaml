@@ -54,14 +54,14 @@ services:
     profiles:
       - app
       - otel
-    image: otel/opentelemetry-collector:latest
+    image: otel/opentelemetry-collector:0.114.0
     container_name: otel-collector
     command: ["--config=/etc/otel-collector-config.yaml"]
     volumes:
       - ./config/otel-collector-config.yaml:/etc/otel-collector-config.yaml
     ports:
-      - "4317:4317"   # OTLP gRPC
-      - "4318:4318"   # OTLP HTTP
+      - "4317:4317"   # OTLP gRPC (standard port)
+      - "4318:4318"   # OTLP HTTP (standard port)
       - "8888:8888"   # Prometheus metrics
       - "8889:8889"   # Prometheus exporter
     networks:
@@ -72,7 +72,7 @@ services:
       prometheus:
         condition: service_started
     healthcheck:
-      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8888/metrics"]
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8889/metrics"]
       interval: 10s
       timeout: 5s
       retries: 3
@@ -83,10 +83,12 @@ services:
     profiles:
       - app
       - otel
-    image: jaegertracing/all-in-one:latest
+    image: jaegertracing/all-in-one:1.62.0
     container_name: jaeger
     ports:
       - "16686:16686"  # UI
+      - "14317:4317"   # OTLP gRPC (remapped to avoid conflict with collector)
+      - "14318:4318"   # OTLP HTTP (remapped to avoid conflict with collector)
       - "14250:14250"  # Model
       - "14268:14268"  # Collector
       - "14269:14269"  # Admin
@@ -103,7 +105,7 @@ services:
 
   # Prometheus for metrics collection
   prometheus:
-    image: prom/prometheus:latest
+    image: prom/prometheus:v2.55.1
     container_name: prometheus
     profiles:
       - app
@@ -130,7 +132,7 @@ services:
 
   # Grafana for metrics visualization
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:11.3.1
     container_name: grafana
     profiles:
       - app
@@ -143,7 +145,7 @@ services:
       - "3000:3000"
     environment:
       - GF_SECURITY_ADMIN_USER=admin
-      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin1
       - GF_USERS_ALLOW_SIGN_UP=false
     networks:
       - app-network
@@ -163,7 +165,7 @@ services:
       - app
     build:
       context: .
-      dockerfile: app/docker/Dockerfile.jvm
+      dockerfile: app/Dockerfile.jvm
     container_name: spring-starter-java
     ports:
       - "8080:8080"

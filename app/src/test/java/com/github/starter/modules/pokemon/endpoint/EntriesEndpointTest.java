@@ -62,15 +62,34 @@ class EntriesEndpointTest {
     @Mock
     private SelectedField selectedField;
 
+    @Mock
+    private io.opentelemetry.api.trace.Tracer tracer;
+
+    @Mock
+    private io.opentelemetry.api.trace.SpanBuilder spanBuilder;
+
+    @Mock
+    private io.opentelemetry.api.trace.Span span;
+
     private EntriesEndpoint endpoint;
 
     @BeforeEach
     void setUp() {
+        when(tracer.spanBuilder(any(String.class))).thenReturn(spanBuilder);
+        when(spanBuilder.setAttribute(any(String.class), any(String.class))).thenReturn(spanBuilder);
+        when(spanBuilder.setAttribute(any(String.class), any(Boolean.class))).thenReturn(spanBuilder);
+        when(spanBuilder.setAttribute(any(String.class), any(Integer.class))).thenReturn(spanBuilder);
+        when(spanBuilder.startSpan()).thenReturn(span);
+        when(span.setAttribute(any(String.class), any(String.class))).thenReturn(span);
+        when(span.setAttribute(any(String.class), any(Boolean.class))).thenReturn(span);
+        when(span.setAttribute(any(String.class), any(Integer.class))).thenReturn(span);
+        
         endpoint = new EntriesEndpoint(
             entriesService,
             paginationService,
             restPaginationAdapter,
-            graphqlPaginationAdapter
+            graphqlPaginationAdapter,
+            tracer
         );
     }
 

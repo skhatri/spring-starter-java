@@ -8,9 +8,6 @@ pluginManagement {
         gradlePluginPortal()
         mavenCentral()
     }
-    plugins {
-        id("net.ltgt.errorprone") version "3.1.0"
-    }
 }
 dependencyResolutionManagement {
     versionCatalogs {
