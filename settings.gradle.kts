@@ -1,5 +1,5 @@
 rootProject.name="spring-starter-java"
-listOf("app", "integration-test", "db-migration").forEach { folder ->
+listOf("app", "integration-test", "db-migration", "load-testing").forEach { folder ->
     include(folder)
     project(":${folder}").projectDir = file(folder)
 }

@@ -32,8 +32,13 @@ dependency-check = "9.0.9"
 owasp-dependency-check = "12.1.1"
 flyway = "10.21.0"
 
+# Performance
+scala = "2.13.16"
+gatling = "3.14.3"
+
+
 # Build
-gradle-wrapper = "8.7"
+gradle-wrapper = "8.13"
 
 # Observability
 opentelemetry = "1.50.0"
@@ -41,6 +46,7 @@ opentelemetry-instrumentation = "2.16.0"
 micrometer = "1.15.1"
 micrometer-tracing = "1.2.3"
 logstash-logback = "7.4"
+
 
 [plugins]
 spring-boot = { id = "org.springframework.boot", version.ref = "spring-boot" }
@@ -89,6 +95,13 @@ reactor-test = { module = "io.projectreactor:reactor-test", version.ref = "react
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 mockito-junit-jupiter = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
 
+gatling-core = { module = "io.gatling:gatling-core", version.ref = "gatling"}
+gatling-app = { module = "io.gatling:gatling-app", version.ref = "gatling"}
+gatling-http = { module = "io.gatling:gatling-http", version.ref = "gatling"}
+gatling-http-client = { module = "io.gatling:gatling-http-client", version.ref = "gatling"}
+gatling-charts = { module = "io.gatling:gatling-charts", version.ref = "gatling"}
+gatling-charts-highcharts = { module = "io.gatling.highcharts:gatling-charts-highcharts", version.ref = "gatling"}
+
 opentelemetry-api = { module = "io.opentelemetry:opentelemetry-api", version.ref = "opentelemetry" }
 opentelemetry-sdk = { module = "io.opentelemetry:opentelemetry-sdk", version.ref = "opentelemetry" }
 opentelemetry-context = { module = "io.opentelemetry:opentelemetry-context", version.ref = "opentelemetry" }
@@ -100,9 +113,14 @@ opentelemetry-instrumentation-bom = { module = "io.opentelemetry.instrumentation
 micrometer-registry-prometheus = { module = "io.micrometer:micrometer-registry-prometheus", version.ref = "micrometer" }
 micrometer-tracing-bridge-otel = { module = "io.micrometer:micrometer-tracing-bridge-otel", version.ref = "micrometer-tracing" }
 
+
 errorprone-core = { module = "com.google.errorprone:error_prone_core", version.ref = "errorprone" }
 errorprone-annotations = { module = "com.google.errorprone:error_prone_annotations", version.ref = "errorprone" }
 spotbugs-annotations = { module = "com.github.spotbugs:spotbugs-annotations", version.ref = "spotbugs-annotations" }
+
+scala-compiler = { module = "org.scala-lang:scala-compiler", version.ref = "scala"}
+scala-library = { module = "org.scala-lang:scala-library", version.ref = "scala"}
+
 
 [bundles]
 spring-boot-core = [
@@ -151,3 +169,5 @@ observability = [
     "micrometer-registry-prometheus",
     "micrometer-tracing-bridge-otel"
 ] 
+scala = [ "scala-compiler", "scala-library" ]
+gatling = [ "gatling-core", "gatling-app", "gatling-http", "gatling-http-client", "gatling-charts", "gatling-charts-highcharts" ]

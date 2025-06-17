@@ -38,8 +38,9 @@ build
 *.iws
 *.ipr
 out
-
+# VS Code
 .vscode
+bin
 
 # Mac
 .DS_Store
