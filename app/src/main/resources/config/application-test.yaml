@@ -1,7 +1,0 @@
-core:
-  environment: test
-  db: h2
-
-logging:
-  level:
-    com.github.starter: DEBUG 

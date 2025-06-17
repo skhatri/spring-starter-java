@@ -33,6 +33,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.when;
@@ -75,14 +76,16 @@ class EntriesEndpointTest {
 
     @BeforeEach
     void setUp() {
-        when(tracer.spanBuilder(any(String.class))).thenReturn(spanBuilder);
-        when(spanBuilder.setAttribute(any(String.class), any(String.class))).thenReturn(spanBuilder);
-        when(spanBuilder.setAttribute(any(String.class), any(Boolean.class))).thenReturn(spanBuilder);
-        when(spanBuilder.setAttribute(any(String.class), any(Integer.class))).thenReturn(spanBuilder);
-        when(spanBuilder.startSpan()).thenReturn(span);
-        when(span.setAttribute(any(String.class), any(String.class))).thenReturn(span);
-        when(span.setAttribute(any(String.class), any(Boolean.class))).thenReturn(span);
-        when(span.setAttribute(any(String.class), any(Integer.class))).thenReturn(span);
+        lenient().when(tracer.spanBuilder(any(String.class))).thenReturn(spanBuilder);
+        lenient().when(spanBuilder.setAttribute(any(String.class), any(String.class))).thenReturn(spanBuilder);
+        lenient().when(spanBuilder.setAttribute(any(String.class), any(Boolean.class))).thenReturn(spanBuilder);
+        lenient().when(spanBuilder.setAttribute(any(String.class), any(Integer.class))).thenReturn(spanBuilder);
+        lenient().when(spanBuilder.setAttribute(any(String.class), any(Long.class))).thenReturn(spanBuilder);
+        lenient().when(spanBuilder.startSpan()).thenReturn(span);
+        lenient().when(span.setAttribute(any(String.class), any(String.class))).thenReturn(span);
+        lenient().when(span.setAttribute(any(String.class), any(Boolean.class))).thenReturn(span);
+        lenient().when(span.setAttribute(any(String.class), any(Integer.class))).thenReturn(span);
+        lenient().when(span.setAttribute(any(String.class), any(Long.class))).thenReturn(span);
         
         endpoint = new EntriesEndpoint(
             entriesService,

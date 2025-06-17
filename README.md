@@ -444,7 +444,7 @@ Configure notifications via:
 
 #### 🎯 Environment Variables
 ```bash
-# OpenTelemetry Collector endpoint
+# OpenTelemetry Collector endpoint (used by custom OpenTelemetryConfig)
 OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
 
 # Service identification

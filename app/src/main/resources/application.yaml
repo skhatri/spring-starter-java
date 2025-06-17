@@ -65,15 +65,6 @@ management:
     sampling:
       probability: 1.0
 
-  otlp:
-    metrics:
-      export:
-        url: ${OTEL_EXPORTER_OTLP_ENDPOINT:http://localhost:4317}
-        headers:
-          service.name: ${spring.application.name}
-        timeout: 10s
-        compression: gzip
-
 otel:
   sdk:
     disabled: false
@@ -81,10 +72,6 @@ otel:
     otlp:
       enabled: true
       endpoint: ${OTEL_EXPORTER_OTLP_ENDPOINT:http://localhost:4317}
-  metrics:
-    exporter: prometheus
-  logs:
-    exporter: otlp
   resource:
     attributes:
       service.name: ${spring.application.name}
@@ -95,11 +82,11 @@ core:
   environment: default
   version: 1.0.0
   pg:
-    host: localhost
-    port: 5432
-    username: postgres
-    password: password
-    database: starter 
+    host: "${PG_HOST:postgres}"
+    port: ${PG_PORT:5432}
+    username: "${PG_USER:postgres}"
+    password: "${PG_PASSWORD:password}"
+    database: "${PG_DB:starter}"
 
 logging:
   level:
