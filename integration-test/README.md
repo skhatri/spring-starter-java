@@ -1,81 +1,92 @@
-# Integration Tests
+# Integration Testing
 
-This module contains integration tests that run against live application instances or mock services.
-All tests are tagged with `@Tag("integration")` for proper categorization.
+This module contains end-to-end tests for the spring-starter-java project using multiple testing frameworks:
 
-**⚠️ Important: Integration tests are disabled by default and must be explicitly enabled.**
-
-## Test Types
-
-### Live Application Tests
-These tests run against a live application instance:
-
-- **GraphQLPokemonTests**: Tests GraphQL Pokemon queries
+- **WireMockTests**: Tests against mock services using WireMock
+- **PostgreSQLTests**: Tests against a real PostgreSQL database using Testcontainers
 - **KarateTests**: Tests REST API endpoints using Karate framework
-
-#### Prerequisites for Live App Tests
-
-1. Start the application with PostgreSQL using docker-compose:
-   ```bash
-   # From the root directory
-   docker-compose up -d
-   ```
-
-2. Ensure the application is running on `http://localhost:8080`
-
-### Mock Service Tests
-These tests run against WireMock containerized services:
-
-- **WireMockTests**: Tests REST API endpoints using WireMock with containerized mock services
-
-#### Prerequisites for Mock Tests
-
-- Docker must be available (WireMock runs in testcontainers)
-- No external application needed - WireMock provides the mock server
-
-## Running the Tests
-
-### Run integration tests (explicitly enabled):
-
-```bash
-# Using the dedicated integrationTest task (always runs integration tests)
-./gradlew integration-test:integrationTest
-
-# Using the standard test task with explicit tag specification
-./gradlew integration-test:test -Dtags="integration"
-./gradlew integration-test:test -DincludeTags="integration"
-```
-
-### Default behavior (no tests run):
-
-```bash
-# This will NOT run any tests (integration tests are excluded by default)
-./gradlew integration-test:test
-```
-
-### Run specific test types:
-
-```bash
-# Individual test classes (must specify integration tag)
-./gradlew integration-test:test -Dtags="integration" --tests "GraphQLPokemonTests"
-./gradlew integration-test:test -Dtags="integration" --tests "KarateTests"
-./gradlew integration-test:test -Dtags="integration" --tests "WireMockTests"
-```
-
-### Tag filtering examples:
-
-```bash
-# Run only integration tests
-./gradlew integration-test:test -Dtags="integration"
-
-# Exclude specific tests while running integration tests
-./gradlew integration-test:test -Dtags="integration" --exclude-tags="slow"
-```
+- **MathServiceTests**: Tests specific to Math service calculations and GraphQL
+- **GraphQLPokemonTests**: Tests GraphQL endpoints for Pokemon service
 
 ## Configuration
 
+### Service Host and Port Configuration
+
+The Karate tests support configurable hosts and ports for both Pokemon and Math services:
+
+**Default Configuration:**
+- Pokemon Service: `localhost:8080` 
+- Math Service: `localhost:8082`
+
+**Configuring Custom Hosts/Ports:**
+
+You can override the default hosts and ports using system properties:
+
+```bash
+# Run tests with custom Pokemon service configuration
+./gradlew integration-test:test -Dpokemon.host=my-pokemon-host -Dpokemon.port=9090
+
+# Run tests with custom Math service configuration  
+./gradlew integration-test:test -Dmath.host=my-math-host -Dmath.port=9091
+
+# Run tests with both services on custom hosts/ports
+./gradlew integration-test:test \
+    -Dpokemon.host=pokemon.example.com -Dpokemon.port=8080 \
+    -Dmath.host=math.example.com -Dmath.port=8082
+
+# For legacy compatibility, server.port still overrides Pokemon service port
+./gradlew integration-test:test -Dserver.port=8081
+```
+
+**Available Configuration Properties:**
+- `pokemon.host` - Pokemon service hostname (default: `localhost`)
+- `pokemon.port` - Pokemon service port (default: `8080`)  
+- `math.host` - Math service hostname (default: `localhost`)
+- `math.port` - Math service port (default: `8082`)
+- `server.port` - Legacy property that overrides Pokemon service port
+
+## Running Tests
+
+### Run All Integration Tests
+
+```bash
+./gradlew integration-test:test
+```
+
+### Run Specific Test Categories
+
+```bash
+# Run only Karate tests
+./gradlew integration-test:test --tests "*KarateTests*"
+
+# Run only Math service tests
+./gradlew integration-test:test --tests "*MathServiceTests*"
+
+# Run only Pokemon GraphQL tests  
+./gradlew integration-test:test --tests "*GraphQLPokemonTests*"
+
+# Run with specific tags
+./gradlew integration-test:test -Dtags="integration" --tests "KarateTests"
+```
+
+### Run Against Different Environments
+
+```bash
+# Test against staging environment
+./gradlew integration-test:test \
+    -Dpokemon.host=pokemon-staging.example.com \
+    -Dmath.host=math-staging.example.com
+
+# Test against local development with non-standard ports
+./gradlew integration-test:test \
+    -Dpokemon.port=8181 \
+    -Dmath.port=8282
+```
+
+## Test Configuration Details
+
+- **WireMock Tests**: Use `karate-config.js` which defaults to `http://localhost:8080`  
 - **Live App Tests**: Use `karate-config.js` which defaults to `http://localhost:8080`
-- **Mock Tests**: WireMock starts on random port (40000-40099 range)
-- **Mock Data**: Located in `src/test/resources/mock/` directory
-- **Test Tagging**: All tests are tagged with `@Tag("integration")`
-- **Default Behavior**: Tests are disabled unless explicitly enabled with tags 
+- **Database Tests**: Use embedded PostgreSQL via Testcontainers
+
+The configuration is handled in `karate-config.js` which automatically detects system properties and configures the appropriate service URLs for all Karate feature files. 

@@ -3,17 +3,18 @@ spring-boot = "3.5.0"
 spring-dependency-management = "1.1.7"
 
 # Testing
-jupiter = "5.13.1"
-junitPlatform = "1.13.1"
+jupiter = "5.12.2"
+junitPlatform = "1.12.2"
 karate = "1.4.1"
 testcontainers = "1.20.1"
 wiremock-testcontainers = "1.0-alpha-14"
 reactor-test="3.6.18"
 mockito="5.18.0"
+assertj = "3.24.2"
 
 # Database
 r2dbc-postgresql = "1.0.5.RELEASE"
-spring-data-r2dbc = "3.5.1"
+spring-data-r2dbc = "3.5.0"
 testcontainers-r2dbc = "1.21.1"
 postgresql-jdbc="42.7.7"
 
@@ -39,6 +40,7 @@ gatling = "3.14.3"
 
 # Build
 gradle-wrapper = "8.13"
+foojay-resolver = "0.7.0"
 
 # Observability
 opentelemetry = "1.50.0"
@@ -80,6 +82,7 @@ postgresql-jdbc = { module = "org.postgresql:postgresql", version.ref = "postgre
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api", version.ref = "jupiter" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "jupiter" }
 junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params", version.ref = "jupiter" }
+junit-jupiter = { module = "org.junit.jupiter:junit-jupiter", version.ref = "jupiter" }
 junit-platform-commons = { module = "org.junit.platform:junit-platform-commons", version.ref = "junitPlatform" }
 junit-platform-runner = { module = "org.junit.platform:junit-platform-runner", version.ref = "junitPlatform" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher", version.ref = "junitPlatform" }
@@ -94,6 +97,7 @@ wiremock-testcontainers = { module = "org.wiremock.integrations.testcontainers:w
 reactor-test = { module = "io.projectreactor:reactor-test", version.ref = "reactor-test" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mockito" }
 mockito-junit-jupiter = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mockito" }
+assertj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
 
 gatling-core = { module = "io.gatling:gatling-core", version.ref = "gatling"}
 gatling-app = { module = "io.gatling:gatling-app", version.ref = "gatling"}
@@ -121,26 +125,35 @@ spotbugs-annotations = { module = "com.github.spotbugs:spotbugs-annotations", ve
 scala-compiler = { module = "org.scala-lang:scala-compiler", version.ref = "scala"}
 scala-library = { module = "org.scala-lang:scala-library", version.ref = "scala"}
 
+spring-boot-gradle-plugin = { module = "org.springframework.boot:spring-boot-gradle-plugin", version.ref = "spring-boot" }
+spring-dependency-management-plugin = { module = "io.spring.gradle:dependency-management-plugin", version.ref = "spring-dependency-management" }
+spotbugs-plugin = { module = "com.github.spotbugs.snom:spotbugs-gradle-plugin", version.ref = "spotbugs-plugin" }
+errorprone-plugin = { module = "net.ltgt.gradle:gradle-errorprone-plugin", version.ref = "errorprone-plugin" }
+foojay-resolver = { module = "org.gradle.toolchains:foojay-resolver", version.ref = "foojay-resolver" }
+
 
 [bundles]
 spring-boot-core = [
     "spring-boot-starter-webflux", 
     "spring-boot-starter-reactor-netty", 
     "spring-boot-starter-websocket", 
-    "spring-boot-starter-graphql"
+    "spring-boot-starter-graphql",
+    "spring-boot-starter-actuator"
 ]
 spring-boot-logging = ["spring-boot-starter-log4j2"]
 database = ["r2dbc-postgresql", "spring-data-r2dbc", "postgresql-jdbc"]
+postgres-database = ["r2dbc-postgresql", "spring-data-r2dbc", "postgresql-jdbc"]
+postgres-testing = ["testcontainers-postgresql", "testcontainers-r2dbc"]
+otel = [
+    "opentelemetry-spring-boot-starter",
+    "micrometer-registry-prometheus",
+    "micrometer-tracing-bridge-otel"
+]
 testing-junit = [
     "junit-jupiter-api", 
     "junit-jupiter-params", 
     "junit-platform-commons", 
     "junit-platform-runner"
-]
-testing-runtime = [
-    "junit-jupiter-engine", 
-    "junit-platform-launcher", 
-    "junit-platform-engine"
 ]
 testing-integration = [
     "testcontainers", 
@@ -154,10 +167,30 @@ testing-mockito = [
     "mockito-core",
     "mockito-junit-jupiter"
 ]
+testing-unit = [
+    "junit-jupiter-api",
+    "junit-jupiter-params", 
+    "junit-platform-commons",
+    "mockito-core",
+    "mockito-junit-jupiter",
+    "assertj-core",
+    "testcontainers",
+    "testcontainers-junit-jupiter"    
+]
+testing-runtime = [
+    "junit-jupiter-engine", 
+    "junit-platform-launcher",
+    "junit-platform-engine",
+]
+quality-analysis = [
+    "spotbugs-annotations",
+    "errorprone-annotations"
+]
 spring-testing = [
     "spring-graphql-test", 
     "spring-boot-test", 
-    "spring-boot-starter-test"
+    "spring-boot-starter-test",
+    "reactor-test"
 ]
 observability = [
     "opentelemetry-api",

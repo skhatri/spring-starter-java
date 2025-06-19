@@ -1,0 +1,68 @@
+{
+  "operations": [
+    {
+      "name": "ADD",
+      "symbol": "+",
+      "description": "Addition operation"
+    },
+    {
+      "name": "SUBTRACT", 
+      "symbol": "-",
+      "description": "Subtraction operation"
+    },
+    {
+      "name": "MULTIPLY",
+      "symbol": "*",
+      "description": "Multiplication operation"
+    },
+    {
+      "name": "DIVIDE",
+      "symbol": "/", 
+      "description": "Division operation"
+    }
+  ],
+  "testCases": [
+    {
+      "operation": "ADD",
+      "operand1": 5.0,
+      "operand2": 3.0,
+      "expectedResult": 8.0,
+      "expression": "5.0 + 3.0 = 8.0"
+    },
+    {
+      "operation": "SUBTRACT",
+      "operand1": 10.0,
+      "operand2": 4.0,
+      "expectedResult": 6.0,
+      "expression": "10.0 - 4.0 = 6.0"
+    },
+    {
+      "operation": "MULTIPLY",
+      "operand1": 7.0,
+      "operand2": 6.0,
+      "expectedResult": 42.0,
+      "expression": "7.0 × 6.0 = 42.0"
+    },
+    {
+      "operation": "DIVIDE",
+      "operand1": 20.0,
+      "operand2": 4.0,
+      "expectedResult": 5.0,
+      "expression": "20.0 ÷ 4.0 = 5.0"
+    }
+  ],
+  "errorCases": [
+    {
+      "operation": "DIVIDE",
+      "operand1": 10.0,
+      "operand2": 0.0,
+      "expectedError": "Division by zero is not allowed"
+    },
+    {
+      "operation": "INVALID",
+      "operand1": 5.0,
+      "operand2": 3.0,
+      "expectedError": "Invalid operation"
+    }
+  ]
+} 

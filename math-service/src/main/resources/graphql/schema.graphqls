@@ -1,0 +1,111 @@
+# Interface representing the basic server status information
+interface ServerStat {
+    # The current status of the server.
+    # This field is required and must be a non-nullable String.
+    status: String!
+
+    # The timestamp of the server status in ISO 8601 format.
+    # This field is required and must be a non-nullable String.
+    server_time: String!
+}
+
+# Type representing the server status with specific implementation details.
+# This type implements the ServerStat interface.
+type Status implements ServerStat {
+    # The current status of the server.
+    # This field is required and must be a non-nullable String.
+    status: String!
+
+    # The timestamp of when the server status was recorded.
+    # This field is required and must be a non-nullable String.
+    server_time: String!
+}
+
+# Enum representing mathematical operations
+enum Operation {
+    ADD
+    SUBTRACT
+    MULTIPLY
+    DIVIDE
+}
+
+# Input type for calculation requests
+input CalculationInput {
+    # First operand
+    operand1: Float!
+    
+    # Second operand
+    operand2: Float!
+    
+    # Mathematical operation to perform
+    operation: Operation!
+}
+
+# Type representing a calculation result
+type CalculationResult {
+    # First operand used in calculation
+    operand1: Float!
+    
+    # Second operand used in calculation
+    operand2: Float!
+    
+    # Operation performed
+    operation: Operation!
+    
+    # Result of the calculation
+    result: Float!
+    
+    # Human-readable expression (e.g., "5.0 + 3.0 = 8.0")
+    expression: String!
+}
+
+# Type representing calculation history entry
+type CalculationHistory {
+    # Unique identifier for the calculation
+    id: String!
+    
+    # The calculation details
+    calculation: CalculationResult!
+    
+    # Timestamp when calculation was performed
+    timestamp: String!
+}
+
+# Root query type for the GraphQL API
+type Query {
+    # Get information about the server status
+    # Returns a Status object with current server status.
+    status: Status!
+    
+    # Perform a mathematical calculation
+    # Returns the result of the calculation
+    calculate(input: CalculationInput!): CalculationResult!
+    
+    # Get supported mathematical operations
+    # Returns a list of supported operations
+    supportedOperations: [Operation!]!
+}
+
+# Root mutation type for the GraphQL API
+type Mutation {
+    # Perform a calculation and store in history
+    # Returns the calculation result with history ID
+    performCalculation(input: CalculationInput!): CalculationHistory!
+}
+
+# Type representing the server status for streaming.
+type StatusStream implements ServerStat {
+    # The stream status id
+    id: String!
+    # The current status of the server.
+    # This field is required and must be a non-nullable String.
+    status: String!
+
+    # The timestamp of when the server status was recorded.
+    # This field is required and must be a non-nullable String in ISO 8601 format.
+    server_time: String!
+}
+
+type Subscription {
+    streamHealth: StatusStream!
+} 

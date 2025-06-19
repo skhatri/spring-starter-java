@@ -42,7 +42,8 @@ fun createGatlingTask(taskName: String, simulationClass: String, enableReports: 
 }
 
 val testModule = project.findProperty("testModule") ?: "pokemon"
-val basePackage = "com.github.starter.$testModule"
+val appName = project.findProperty("appName") ?: "poke"
+val basePackage = "com.github.starter.$appName.$testModule"
 
 val gatlingSimulations = mapOf(
     "runTest" to "${basePackage}.SimulationEntrypoint",
@@ -53,6 +54,7 @@ val gatlingSimulations = mapOf(
 gatlingSimulations.forEach { (taskName, simulationClass) ->
     createGatlingTask(taskName, simulationClass, true)
 }
+
 
 scala {
 }

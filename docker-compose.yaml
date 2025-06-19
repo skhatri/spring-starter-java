@@ -159,14 +159,14 @@ services:
       retries: 3
       start_period: 15s
 
-  # Application service
-  app:
+  # Pokemon service (formerly app)
+  pokemon-service:
     profiles:
       - app
     build:
       context: .
-      dockerfile: app/Dockerfile.jvm
-    container_name: spring-starter-java
+      dockerfile: pokemon-service/Dockerfile.jvm
+    container_name: pokemon-service
     ports:
       - "8080:8080"
     environment:
@@ -180,7 +180,7 @@ services:
       - PG_PORT=5432
       - PG_DB=starter
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
-      - OTEL_RESOURCE_ATTRIBUTES=service.name=spring-starter-java
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=pokemon-service
     networks:
       - app-network
     depends_on:
@@ -196,6 +196,32 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+
+  # Math service
+  math-service:
+    profiles:
+      - app
+    build:
+      context: .
+      dockerfile: math-service/Dockerfile.jvm
+    container_name: math-service
+    ports:
+      - "8082:8082"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://otel-collector:4317
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=math-service
+    networks:
+      - app-network
+    depends_on:
+      otel-collector:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8082/actuator/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
 
 volumes:
   postgres-data:

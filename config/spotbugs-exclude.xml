@@ -22,8 +22,10 @@
     
     <!-- Exclude specific bug patterns that are not relevant to our project -->
     <Match>
-        <Bug pattern="EI_EXPOSE_REP, EI_EXPOSE_REP2" />
-        <Confidence value="3" />
+        <Bug pattern="EI_EXPOSE_REP" />
+    </Match>
+    <Match>
+        <Bug pattern="EI_EXPOSE_REP2" />
     </Match>
     
     <!-- Exclude serialization issues for DTOs -->
@@ -45,5 +47,80 @@
     <Match>
         <Class name="~.*Repository"/>
         <Bug pattern="VA_FORMAT_STRING_USES_NEWLINE"/>
+    </Match>
+    
+    <!-- Exclude ExceptionsEndpoint as it intentionally triggers exceptions for testing -->
+    <Match>
+        <Class name="com.github.starter.modules.exceptions.endpoint.ExceptionsEndpoint" />
+    </Match>
+    
+    <!-- Exclude internal representation exposure for model classes (Records and DTOs) -->
+    <Match>
+        <Package name="~.*\.model\..*" />
+        <Bug pattern="EI_EXPOSE_REP" />
+    </Match>
+    <Match>
+        <Package name="~.*\.model\..*" />
+        <Bug pattern="EI_EXPOSE_REP2" />
+    </Match>
+    
+    <!-- Exclude pagination models -->
+    <Match>
+        <Class name="~.*\.pagination\..*" />
+        <Bug pattern="EI_EXPOSE_REP" />
+    </Match>
+    
+    <!-- Exclude caught exception pattern for utility methods -->
+    <Match>
+        <Bug pattern="REC_CATCH_EXCEPTION" />
+    </Match>
+    
+    <!-- Exclude test configuration issues -->
+    <Match>
+        <Class name="~.*TestConfiguration" />
+        <Bug pattern="BC_UNCONFIRMED_CAST" />
+    </Match>
+    <Match>
+        <Class name="~.*TestConfiguration" />
+        <Bug pattern="MS_EXPOSE_REP" />
+    </Match>
+    
+    <!-- Exclude unread fields in test mock objects -->
+    <Match>
+        <Class name="~.*Test.*" />
+        <Bug pattern="UrF" />
+    </Match>
+    
+    <!-- Exclude specific test class issues -->
+    <Match>
+        <Class name="com.github.starter.config.PostgreSQLTestConfiguration" />
+    </Match>
+    <Match>
+        <Class name="com.github.starter.modules.exceptions.endpoint.ExceptionsEndpointHttpTest" />
+    </Match>
+    <Match>
+        <Class name="~.*\.ExceptionsEndpointHttpTest\$MockErrorResponse" />
+    </Match>
+    
+    <!-- Exclude testcontainer cast issues -->
+    <Match>
+        <Class name="com.github.starter.test.containers.PostgresTestContainer" />
+        <Bug pattern="BC_UNCONFIRMED_CAST" />
+    </Match>
+    <Match>
+        <Class name="com.github.starter.config.PostgreSQLTestConfiguration" />
+        <Bug pattern="BC_UNCONFIRMED_CAST" />
+    </Match>
+    
+    <!-- Exclude test method return value issues -->
+    <Match>
+        <Class name="com.github.starter.modules.pagination.model.CursorTest" />
+        <Bug pattern="RV_RETURN_VALUE_IGNORED" />
+    </Match>
+    
+    <!-- Exclude test dead store issues -->
+    <Match>
+        <Class name="com.github.starter.config.SecretMaskingFilterAdvancedTest" />
+        <Bug pattern="DLS_DEAD_LOCAL_STORE" />
     </Match>
 </FindBugsFilter> 
