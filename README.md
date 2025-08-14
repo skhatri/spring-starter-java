@@ -278,7 +278,7 @@ This project implements **production-grade observability** using the **OpenTelem
 docker-compose --profile=otel up -d
 
 # Access dashboards
-open http://localhost:3000    # Grafana (admin/admin) - Dashboards & Visualization
+open http://localhost:3000    # Grafana (admin/admin1) - Dashboards & Visualization
 open http://localhost:9090    # Prometheus - Metrics Collection
 open http://localhost:16686   # Jaeger - Distributed Tracing
 ```
